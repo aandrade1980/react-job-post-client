@@ -7,7 +7,6 @@ import { getJobById } from "../redux/actions/jobActions";
 
 class JobItem extends React.Component {
   componentDidMount() {
-    console.log("params => ", this.props.match.params);
     this.props.getJobById(this.props.match.params.jobId);
   }
 

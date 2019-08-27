@@ -1,6 +1,7 @@
 const initialState = {
   jobs: [],
-  currentJob: {}
+  currentJob: {},
+  showModal: false
 };
 
 export default function(state = initialState, action) {
@@ -8,12 +9,23 @@ export default function(state = initialState, action) {
     case "SET_JOBS":
       return {
         ...state,
-        jobs: action.payload
+        jobs: action.payload,
+        currentJob: {}
       };
     case "SET_JOB":
       return {
         ...state,
         currentJob: action.payload
+      };
+    case "ADD_JOB":
+      return {
+        ...state,
+        jobs: [...state.jobs, action.payload]
+      };
+    case "TOGGLE_MODAL":
+      return {
+        ...state,
+        showModal: action.payload
       };
     default:
       return state;

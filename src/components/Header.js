@@ -1,12 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-function Header({ title }) {
-  return (
-    <HeaderContainer>
-      <h1>{title}</h1>
-    </HeaderContainer>
-  );
+// Redux
+import { connect } from "react-redux";
+import { showModal } from "../redux/actions/jobActions";
+
+class Header extends React.Component {
+  handleClick = () => {
+    this.props.showModal(true);
+  };
+
+  render() {
+    return (
+      <HeaderContainer>
+        <h1>{this.props.title}</h1>
+        <button onClick={this.handleClick}>NEW JOB!!!</button>
+      </HeaderContainer>
+    );
+  }
 }
 
 const HeaderContainer = styled.header`
@@ -20,4 +31,7 @@ const HeaderContainer = styled.header`
   align-items: center;
 `;
 
-export default Header;
+export default connect(
+  null,
+  { showModal }
+)(Header);
