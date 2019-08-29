@@ -39,10 +39,10 @@ export const postJob = job => dispatch => {
 
   fetch(`${API_URL}/job`, postOptions)
     .then(res => res.json())
-    .then(payload =>
+    .then(data =>
       dispatch({
         type: "ADD_JOB",
-        payload
+        payload: data
       })
     )
     .finally(() => {
@@ -51,6 +51,19 @@ export const postJob = job => dispatch => {
         payload: false
       });
     });
+};
+
+export const deleteJob = jobId => dispatch => {
+  fetch(`${API_URL}/job/${jobId}`, {
+    method: "DELETE"
+  })
+    .then(res => res.json())
+    .then(() =>
+      dispatch({
+        type: "DELETE_JOB",
+        payload: jobId
+      })
+    );
 };
 
 export const showModal = show => dispatch => {
