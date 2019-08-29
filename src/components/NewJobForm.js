@@ -119,7 +119,7 @@ const FormContainer = styled.div`
   border-radius: 4px;
   padding: 25px;
   form {
-    min-width: 350px;
+    min-width: 450px;
     display: flex;
     flex-direction: column;
     div {
@@ -128,6 +128,10 @@ const FormContainer = styled.div`
     }
     textarea {
       width: 98%;
+      font-size: 1rem;
+      line-height: 1.5;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
     }
     .buttonContainer {
       display: flex;
