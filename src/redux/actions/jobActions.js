@@ -24,14 +24,20 @@ export const getJobById = jobId => dispatch => {
 };
 
 export const postJob = job => dispatch => {
-  fetch(`${API_URL}/job`, {
+  const data = new FormData();
+
+  data.append("title", job.title);
+  data.append("company", job.company);
+  data.append("email", job.email);
+  data.append("description", job.description);
+  job.image && data.append("image", job.image, job.image.name);
+
+  const postOptions = {
     method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(job)
-  })
+    body: data
+  };
+
+  fetch(`${API_URL}/job`, postOptions)
     .then(res => res.json())
     .then(payload =>
       dispatch({
