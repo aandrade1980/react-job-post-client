@@ -13,8 +13,6 @@ import NewJobForm from "./components/NewJobForm";
 
 class App extends React.Component {
   render() {
-    console.log("show modal => ", this.props.showModal);
-
     return (
       <Router>
         <div className="App">

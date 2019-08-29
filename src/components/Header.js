@@ -6,15 +6,10 @@ import { connect } from "react-redux";
 import { showModal } from "../redux/actions/jobActions";
 
 class Header extends React.Component {
-  handleClick = () => {
-    this.props.showModal(true);
-  };
-
   render() {
     return (
       <HeaderContainer>
         <h1>{this.props.title}</h1>
-        <button onClick={this.handleClick}>NEW JOB!!!</button>
       </HeaderContainer>
     );
   }

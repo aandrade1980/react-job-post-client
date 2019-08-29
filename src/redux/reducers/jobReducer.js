@@ -20,7 +20,7 @@ export default function(state = initialState, action) {
     case "ADD_JOB":
       return {
         ...state,
-        jobs: [...state.jobs, action.payload]
+        jobs: [action.payload, ...state.jobs]
       };
     case "TOGGLE_MODAL":
       return {
