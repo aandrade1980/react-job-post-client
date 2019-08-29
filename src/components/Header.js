@@ -1,29 +1,58 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+// MUI
+import HomeIcon from "@material-ui/icons/Home";
+import NewIcon from "@material-ui/icons/OpenInNew";
 
 // Redux
 import { connect } from "react-redux";
 import { showModal } from "../redux/actions/jobActions";
 
+// Components
+import CustomButton from "./CustomButton";
+
 class Header extends React.Component {
+  handleClick = () => this.props.showModal(true);
+
   render() {
     return (
       <HeaderContainer>
-        <h1>{this.props.title}</h1>
+        <div>
+          <h1>{this.props.title}</h1>
+          <nav>
+            <CustomButton title="Home" component={Link} to="/">
+              <HomeIcon />
+            </CustomButton>
+            <CustomButton title="New Job" onClick={this.handleClick}>
+              <NewIcon />
+            </CustomButton>
+          </nav>
+        </div>
       </HeaderContainer>
     );
   }
 }
 
 const HeaderContainer = styled.header`
-  background-color: #039be5;
-  color: whitesmoke;
-  display: flex;
-  justify-content: center;
-  height: 75px;
   position: sticky;
   top: 0;
-  align-items: center;
+  z-index: 1;
+  color: whitesmoke;
+  div {
+    background-color: #3f51b5;
+    display: flex;
+    justify-content: flex-start;
+    height: 75px;
+    align-items: center;
+    h1 {
+      margin: 0 45px;
+    }
+  }
+  svg {
+    color: whitesmoke;
+  }
 `;
 
 export default connect(
