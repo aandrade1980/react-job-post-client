@@ -27,7 +27,8 @@ const styles = {
   section: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    marginTop: "15px"
   }
 };
 
