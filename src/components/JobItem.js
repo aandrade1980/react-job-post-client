@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
 // Redux
 import { connect } from "react-redux";
@@ -14,32 +15,36 @@ class JobItem extends React.Component {
     const { title, company, email, image, description } = this.props.job;
     return (
       <section>
-        <article style={styles.article}>
+        <JobItemContainer>
           <div>
             <h3>{title}</h3>
             <p>{description}</p>
             <h4>{company}</h4>
             <h4>{email}</h4>
           </div>
-          {image && <img style={styles.img} src={image} alt="Job" />}
-        </article>
+          {image && <img src={image} alt="Job" />}
+        </JobItemContainer>
       </section>
     );
   }
 }
 
-const styles = {
-  img: {
-    height: "auto",
-    width: "50%",
-    marginRight: "15px",
-    marginTop: "15px"
-  },
-  article: {
-    display: "flex",
-    justifyContent: "center"
+const JobItemContainer = styled.article`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+  div {
+    max-width: 33%;
+    p {
+      white-space: pre-wrap;
+    }
   }
-};
+  img {
+    height: auto;
+    width: 50%;
+    max-width: 500px;
+  }
+`;
 
 const mapStateToProps = state => ({
   job: state.job.currentJob
