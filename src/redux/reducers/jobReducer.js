@@ -22,6 +22,11 @@ export default function(state = initialState, action) {
         ...state,
         jobs: [action.payload, ...state.jobs]
       };
+    case "DELETE_JOB":
+      return {
+        ...state,
+        jobs: state.jobs.filter(job => job.jobId !== action.payload)
+      };
     case "TOGGLE_MODAL":
       return {
         ...state,
