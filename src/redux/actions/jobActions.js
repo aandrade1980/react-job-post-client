@@ -67,7 +67,7 @@ export const deleteJob = jobId => dispatch => {
     );
 };
 
-export const getAllCategories = () => dispatch => {
+export const getAllCategories = () => dispatch =>
   fetch(`${API_URL}/categories`)
     .then(res => res.json())
     .then(categories =>
@@ -76,7 +76,6 @@ export const getAllCategories = () => dispatch => {
         payload: categories
       })
     );
-};
 
 export const reOrderJobs = (items, position) => dispatch =>
   dispatch({ type: "RE_ORDER_JOBS", payload: { items, position } });

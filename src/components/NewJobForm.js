@@ -55,8 +55,6 @@ class NewJobForm extends Component {
   handleSubmit = () => this.props.postJob(this.state);
 
   handleCheckbox = cat => event => {
-    console.log("catName => ", cat);
-    console.log("event.target.checked => ", event.target.checked);
     if (event.target.checked) {
       this.setState({
         categories: [...this.state.categories, cat.id]

@@ -19,9 +19,7 @@ const JobCard = ({
   setDraggedItem,
   job
 }) => {
-  const goToJob = () => {
-    history.push(`/job/${jobId}`);
-  };
+  const goToJob = () => history.push(`/job/${jobId}`);
 
   const handleClick = evt => {
     evt.stopPropagation();
@@ -30,19 +28,18 @@ const JobCard = ({
 
   const onDragStart = evt => {
     evt.dataTransfer.effectAllowed = "move";
+    evt.dataTransfer.setData("text", "anything");
     setDraggedItem(job);
   };
 
-  const onDragEnd = evt => {
-    console.log("onDragEnd");
-  };
+  const onDrop = evt => evt.preventDefault();
 
   return (
     <JobItemContainer
       onClick={goToJob}
       draggable
       onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
+      onDrop={onDrop}
     >
       <h3>{title}</h3>
       <CustomButton title="Delete" onClick={handleClick}>
