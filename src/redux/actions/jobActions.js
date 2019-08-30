@@ -30,6 +30,7 @@ export const postJob = job => dispatch => {
   data.append("company", job.company);
   data.append("email", job.email);
   data.append("description", job.description);
+  data.append("categories", job.categories);
   job.image && data.append("image", job.image, job.image.name);
 
   const postOptions = {
@@ -65,6 +66,20 @@ export const deleteJob = jobId => dispatch => {
       })
     );
 };
+
+export const getAllCategories = () => dispatch => {
+  fetch(`${API_URL}/categories`)
+    .then(res => res.json())
+    .then(categories =>
+      dispatch({
+        type: "SET_CATEGORIES",
+        payload: categories
+      })
+    );
+};
+
+export const reOrderJobs = (items, position) => dispatch =>
+  dispatch({ type: "RE_ORDER_JOBS", payload: { items, position } });
 
 export const showModal = show => dispatch => {
   dispatch({

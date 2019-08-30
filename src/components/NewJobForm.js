@@ -6,12 +6,18 @@ import { Button, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 import { postJob, showModal } from "../redux/actions/jobActions";
 
+// MUI
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
 class NewJobForm extends Component {
   state = {
     title: "",
     description: "",
     company: "",
-    email: ""
+    email: "",
+    categories: []
   };
 
   componentDidMount() {
@@ -48,6 +54,20 @@ class NewJobForm extends Component {
 
   handleSubmit = () => this.props.postJob(this.state);
 
+  handleCheckbox = cat => event => {
+    console.log("catName => ", cat);
+    console.log("event.target.checked => ", event.target.checked);
+    if (event.target.checked) {
+      this.setState({
+        categories: [...this.state.categories, cat.id]
+      });
+    } else {
+      this.setState({
+        categories: this.state.categories.filter(_cat => _cat.id !== cat.id)
+      });
+    }
+  };
+
   render() {
     return (
       <FormContainer ref={node => (this.node = node)}>
@@ -81,6 +101,24 @@ class NewJobForm extends Component {
               onChange={this.handleChange}
               placeholder="Email"
             />
+          </div>
+          <div>
+            <FormGroup>
+              {this.props.categories.map(cat => {
+                return (
+                  <FormControlLabel
+                    key={cat.id}
+                    control={
+                      <Checkbox
+                        value={cat.name}
+                        onChange={this.handleCheckbox(cat)}
+                      />
+                    }
+                    label={cat.name}
+                  />
+                );
+              })}
+            </FormGroup>
           </div>
           <div>
             <textarea
@@ -141,12 +179,16 @@ const FormContainer = styled.div`
   }
 `;
 
+const mapStateToProps = ({ job: { categories } }) => ({
+  categories
+});
+
 const mapActionsToProps = {
   postJob,
   showModal
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapActionsToProps
 )(NewJobForm);
