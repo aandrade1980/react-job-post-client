@@ -1,7 +1,7 @@
 const API_URL =
   "https://us-central1-react-job-post-functions.cloudfunctions.net/api";
 
-export const getAllJobs = () => dispatch => {
+export const getAllJobs = () => dispatch =>
   fetch(`${API_URL}/jobs`)
     .then(res => res.json())
     .then(data =>
@@ -10,9 +10,8 @@ export const getAllJobs = () => dispatch => {
         payload: data
       })
     );
-};
 
-export const getJobById = jobId => dispatch => {
+export const getJobById = jobId => dispatch =>
   fetch(`${API_URL}/job/${jobId}`)
     .then(res => res.json())
     .then(data =>
@@ -21,7 +20,6 @@ export const getJobById = jobId => dispatch => {
         payload: data
       })
     );
-};
 
 export const postJob = job => dispatch => {
   const data = new FormData();
@@ -54,7 +52,7 @@ export const postJob = job => dispatch => {
     });
 };
 
-export const deleteJob = jobId => dispatch => {
+export const deleteJob = jobId => dispatch =>
   fetch(`${API_URL}/job/${jobId}`, {
     method: "DELETE"
   })
@@ -65,7 +63,6 @@ export const deleteJob = jobId => dispatch => {
         payload: jobId
       })
     );
-};
 
 export const getAllCategories = () => dispatch =>
   fetch(`${API_URL}/categories`)
@@ -80,9 +77,8 @@ export const getAllCategories = () => dispatch =>
 export const reOrderJobs = (items, position) => dispatch =>
   dispatch({ type: "RE_ORDER_JOBS", payload: { items, position } });
 
-export const showModal = show => dispatch => {
+export const showModal = show => dispatch =>
   dispatch({
     type: "TOGGLE_MODAL",
     payload: show
   });
-};
