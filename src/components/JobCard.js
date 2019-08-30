@@ -12,7 +12,13 @@ import CustomButton from "./CustomButton";
 // MUI
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const JobCard = ({ job: { title, image, jobId }, history, deleteJob }) => {
+const JobCard = ({
+  job: { jobId, title, image },
+  history,
+  deleteJob,
+  setDraggedItem,
+  job
+}) => {
   const goToJob = () => {
     history.push(`/job/${jobId}`);
   };
@@ -22,8 +28,22 @@ const JobCard = ({ job: { title, image, jobId }, history, deleteJob }) => {
     deleteJob(jobId);
   };
 
+  const onDragStart = evt => {
+    evt.dataTransfer.effectAllowed = "move";
+    setDraggedItem(job);
+  };
+
+  const onDragEnd = evt => {
+    console.log("onDragEnd");
+  };
+
   return (
-    <JobItemContainer onClick={goToJob}>
+    <JobItemContainer
+      onClick={goToJob}
+      draggable
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    >
       <h3>{title}</h3>
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon />
