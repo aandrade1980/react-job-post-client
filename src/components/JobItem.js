@@ -11,13 +11,42 @@ class JobItem extends React.Component {
     this.props.getJobById(this.props.match.params.jobId);
   }
 
+  parseCategories = (categories = "") => {
+    const cats = categories.split(",");
+    let catsToReturn = [];
+    cats.forEach(cat =>
+      catsToReturn.push(
+        ...this.props.categories.filter(_cat => _cat.id === cat)
+      )
+    );
+
+    return catsToReturn;
+  };
+
   render() {
-    const { title, company, email, image, description } = this.props.job;
+    const {
+      title,
+      company,
+      email,
+      image,
+      description,
+      categories
+    } = this.props.currentJob;
+
+    const categoriesToDisplay = this.parseCategories(categories);
+
     return (
       <section>
         <JobItemContainer>
           <div>
-            <h3>{title}</h3>
+            <h2>{title}</h2>
+            {categoriesToDisplay && (
+              <ul style={{ listStyleType: "square" }}>
+                {categoriesToDisplay.map(cat => (
+                  <li key={cat.id}>{cat.name}</li>
+                ))}
+              </ul>
+            )}
             <p>{description}</p>
             <h4>{company}</h4>
             <h4>{email}</h4>
@@ -46,8 +75,9 @@ const JobItemContainer = styled.article`
   }
 `;
 
-const mapStateToProps = state => ({
-  job: state.job.currentJob
+const mapStateToProps = ({ job: { currentJob, categories } }) => ({
+  currentJob,
+  categories
 });
 
 export default connect(

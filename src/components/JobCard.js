@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
+import "../App.scss";
+
 // Redux
 import { connect } from "react-redux";
 import { deleteJob } from "../redux/actions/jobActions";
@@ -41,7 +43,7 @@ const JobCard = ({
       onDragStart={onDragStart}
       onDrop={onDrop}
     >
-      <h3>{title}</h3>
+      <h3 className="ellipsis">{title}</h3>
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon />
       </CustomButton>
@@ -73,6 +75,7 @@ const JobItemContainer = styled.article`
   }
   h3 {
     text-align: center;
+    max-width: 90%;
   }
   button {
     position: absolute;
