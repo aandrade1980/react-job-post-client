@@ -1,5 +1,4 @@
-const API_URL =
-  "https://us-central1-react-job-post-functions.cloudfunctions.net/api";
+import { API_URL } from "../../util/Contants";
 
 export const getAllJobs = () => dispatch =>
   fetch(`${API_URL}/jobs`)
@@ -55,24 +54,12 @@ export const postJob = job => dispatch => {
 export const deleteJob = jobId => dispatch =>
   fetch(`${API_URL}/job/${jobId}`, {
     method: "DELETE"
-  })
-    .then(res => res.json())
-    .then(() =>
-      dispatch({
-        type: "DELETE_JOB",
-        payload: jobId
-      })
-    );
-
-export const getAllCategories = () => dispatch =>
-  fetch(`${API_URL}/categories`)
-    .then(res => res.json())
-    .then(categories =>
-      dispatch({
-        type: "SET_CATEGORIES",
-        payload: categories
-      })
-    );
+  }).then(() =>
+    dispatch({
+      type: "DELETE_JOB",
+      payload: jobId
+    })
+  );
 
 export const reOrderJobs = (items, position) => dispatch =>
   dispatch({ type: "RE_ORDER_JOBS", payload: { items, position } });

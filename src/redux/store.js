@@ -2,13 +2,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 import jobReducer from "./reducers/jobReducer";
+import categoryReducer from "./reducers/categoryReducer";
 
 const initialState = {};
 
 const middleware = [thunk];
 
 const reducers = combineReducers({
-  job: jobReducer
+  job: jobReducer,
+  category: categoryReducer
 });
 
 const composeEnhancers =

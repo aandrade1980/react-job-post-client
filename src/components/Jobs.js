@@ -2,11 +2,7 @@ import React, { Component } from "react";
 
 // Redux
 import { connect } from "react-redux";
-import {
-  getAllJobs,
-  getAllCategories,
-  reOrderJobs
-} from "../redux/actions/jobActions";
+import { getAllJobs, reOrderJobs } from "../redux/actions/jobActions";
 
 // Components
 import JobCard from "./JobCard";
@@ -19,7 +15,6 @@ class Jobs extends Component {
 
   componentDidMount() {
     this.props.getAllJobs();
-    this.props.getAllCategories();
   }
 
   setDraggedItem = item => this.setState({ draggedItem: item });
@@ -70,7 +65,6 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = {
-  getAllCategories,
   getAllJobs,
   reOrderJobs
 };
