@@ -45,7 +45,7 @@ const JobCard = ({
     >
       <h3 className="ellipsis">{title}</h3>
       <CustomButton title="Delete" onClick={handleClick}>
-        <DeleteIcon />
+        <DeleteIcon color="error" />
       </CustomButton>
       {image && <img src={image} alt="Job" />}
     </JobItemContainer>
@@ -81,7 +81,6 @@ const JobItemContainer = styled.article`
     position: absolute;
     top: 5px;
     right: 5px;
-    color: #e82727;
   }
 `;
 

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // MUI
 import HomeIcon from "@material-ui/icons/Home";
 import NewIcon from "@material-ui/icons/OpenInNew";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 // Redux
 import { connect } from "react-redux";
@@ -27,6 +28,9 @@ class Header extends React.Component {
             </CustomButton>
             <CustomButton title="New Job" onClick={this.handleClick}>
               <NewIcon />
+            </CustomButton>
+            <CustomButton title="Categories" component={Link} to="/Categories">
+              <FormatListBulletedIcon />
             </CustomButton>
           </nav>
         </div>

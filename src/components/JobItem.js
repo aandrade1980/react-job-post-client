@@ -75,7 +75,10 @@ const JobItemContainer = styled.article`
   }
 `;
 
-const mapStateToProps = ({ job: { currentJob, categories } }) => ({
+const mapStateToProps = ({
+  job: { currentJob },
+  category: { categories }
+}) => ({
   currentJob,
   categories
 });

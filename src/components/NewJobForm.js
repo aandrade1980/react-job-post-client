@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Button, TextField } from "@material-ui/core";
 
 // Redux
 import { connect } from "react-redux";
@@ -10,6 +9,7 @@ import { postJob, showModal } from "../redux/actions/jobActions";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { Button, TextField } from "@material-ui/core";
 
 class NewJobForm extends Component {
   state = {
@@ -177,7 +177,7 @@ const FormContainer = styled.div`
   }
 `;
 
-const mapStateToProps = ({ job: { categories } }) => ({
+const mapStateToProps = ({ category: { categories } }) => ({
   categories
 });
 

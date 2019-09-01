@@ -1,8 +1,7 @@
 const initialState = {
   jobs: [],
   currentJob: {},
-  showModal: false,
-  categories: []
+  showModal: false
 };
 
 export default function(state = initialState, action) {
@@ -27,11 +26,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         jobs: state.jobs.filter(job => job.jobId !== action.payload)
-      };
-    case "SET_CATEGORIES":
-      return {
-        ...state,
-        categories: action.payload
       };
     case "RE_ORDER_JOBS":
       const filterJobs = state.jobs.filter(
