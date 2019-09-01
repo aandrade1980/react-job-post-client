@@ -25,10 +25,7 @@ class Categories extends Component {
 
   handleSubmit = () => this.props.postCategory(this.state.categoryName);
 
-  deleteCategory = catId => {
-    console.log("CatID => ", catId);
-    this.props.deleteCategory(catId);
-  };
+  deleteCategory = catId => this.props.deleteCategory(catId);
 
   render() {
     const { categories } = this.props;
