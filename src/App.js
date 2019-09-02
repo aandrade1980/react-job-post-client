@@ -23,7 +23,7 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Header title="Jobs" />
-          {this.props.showModal && (
+          {this.props.modal.show && (
             <ModalContainer>
               <NewJobForm />
             </ModalContainer>
@@ -37,8 +37,8 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  showModal: state.job.showModal
+const mapStateToProps = ({ job: { modal } }) => ({
+  modal
 });
 
 export default connect(

@@ -2,26 +2,24 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+import { parseCategories } from "../util/Functions";
+
 // Redux
 import { connect } from "react-redux";
-import { getJobById } from "../redux/actions/jobActions";
+import { getJobById, openModal } from "../redux/actions/jobActions";
+
+// Components
+import CustomButton from "./CustomButton";
+
+// MUI
+import EditIcon from "@material-ui/icons/Edit";
 
 class JobItem extends React.Component {
   componentDidMount() {
     this.props.getJobById(this.props.match.params.jobId);
   }
 
-  parseCategories = (categories = "") => {
-    const cats = categories.split(",");
-    let catsToReturn = [];
-    cats.forEach(cat =>
-      catsToReturn.push(
-        ...this.props.categories.filter(_cat => _cat.id === cat)
-      )
-    );
-
-    return catsToReturn;
-  };
+  openModal = () => this.props.openModal({ show: true, edit: true });
 
   render() {
     const {
@@ -33,7 +31,10 @@ class JobItem extends React.Component {
       categories
     } = this.props.currentJob;
 
-    const categoriesToDisplay = this.parseCategories(categories);
+    const categoriesToDisplay = parseCategories(
+      categories,
+      this.props.categories
+    );
 
     return (
       <section>
@@ -52,6 +53,11 @@ class JobItem extends React.Component {
             <h4>{email}</h4>
           </div>
           {image && <img src={image} alt="Job" />}
+          <div>
+            <CustomButton title="Edit" onClick={this.openModal}>
+              <EditIcon color="primary" />
+            </CustomButton>
+          </div>
         </JobItemContainer>
       </section>
     );
@@ -60,7 +66,8 @@ class JobItem extends React.Component {
 
 const JobItemContainer = styled.article`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: flex-start;
   margin-top: 50px;
   div {
     max-width: 33%;
@@ -72,6 +79,7 @@ const JobItemContainer = styled.article`
     height: auto;
     width: 50%;
     max-width: 500px;
+    margin: 0 15px;
   }
 `;
 
@@ -85,5 +93,5 @@ const mapStateToProps = ({
 
 export default connect(
   mapStateToProps,
-  { getJobById }
+  { getJobById, openModal }
 )(withRouter(JobItem));

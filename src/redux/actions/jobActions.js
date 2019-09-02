@@ -61,11 +61,33 @@ export const deleteJob = jobId => dispatch =>
     })
   );
 
+export const updateJob = updatedJob => async dispatch => {
+  const response = await fetch(`${API_URL}/job/${updateJob.jobId}`, {
+    method: "PUT",
+    body: JSON.stringify(updatedJob),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (response.status === 200) {
+    dispatch({
+      type: "UPDATE_JOB",
+      payload: updatedJob
+    });
+    dispatch({
+      type: "TOGGLE_MODAL",
+      payload: { show: false, edit: false }
+    });
+  }
+};
+
 export const reOrderJobs = (items, position) => dispatch =>
   dispatch({ type: "RE_ORDER_JOBS", payload: { items, position } });
 
-export const showModal = show => dispatch =>
+export const openModal = options => dispatch =>
   dispatch({
     type: "TOGGLE_MODAL",
-    payload: show
+    payload: options
   });
