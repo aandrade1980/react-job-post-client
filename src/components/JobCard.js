@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import "../App.scss";
 
@@ -15,12 +17,14 @@ import CustomButton from "./CustomButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const JobCard = ({
-  job: { jobId, title, image },
+  job: { jobId, title, image, createdAt },
   history,
   deleteJob,
   setDraggedItem,
   job
 }) => {
+  dayjs.extend(relativeTime);
+
   const goToJob = () => history.push(`/job/${jobId}`);
 
   const handleClick = evt => {
@@ -44,6 +48,9 @@ const JobCard = ({
       onDrop={onDrop}
     >
       <h3 className="ellipsis">{title}</h3>
+      <div className="dayjs-container">
+        <span>({dayjs(createdAt).fromNow()})</span>
+      </div>
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon color="error" />
       </CustomButton>
@@ -81,6 +88,12 @@ const JobItemContainer = styled.article`
     position: absolute;
     top: 5px;
     right: 5px;
+  }
+  .dayjs-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -15px;
+    font-size: 14px;
   }
 `;
 
