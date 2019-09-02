@@ -1,7 +1,7 @@
 const initialState = {
   jobs: [],
   currentJob: {},
-  showModal: false
+  modal: { show: false, edit: false }
 };
 
 export default function(state = initialState, action) {
@@ -27,6 +27,19 @@ export default function(state = initialState, action) {
         ...state,
         jobs: state.jobs.filter(job => job.jobId !== action.payload)
       };
+    case "UPDATE_JOB":
+      return {
+        ...state,
+        jobs: state.jobs.map(job => {
+          if (job.jobId !== action.payload.jobId) {
+            return job;
+          }
+          return {
+            ...action.payload
+          };
+        }),
+        currentJob: action.payload
+      };
     case "RE_ORDER_JOBS":
       const filterJobs = state.jobs.filter(
         job => job.jobId !== action.payload.items.draggedItem.jobId
@@ -45,7 +58,7 @@ export default function(state = initialState, action) {
     case "TOGGLE_MODAL":
       return {
         ...state,
-        showModal: action.payload
+        modal: action.payload
       };
     default:
       return state;

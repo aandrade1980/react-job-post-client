@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // Redux
 import { connect } from "react-redux";
-import { postJob, showModal } from "../redux/actions/jobActions";
+import { postJob, updateJob, openModal } from "../redux/actions/jobActions";
 
 // MUI
 import FormGroup from "@material-ui/core/FormGroup";
@@ -22,6 +22,12 @@ class NewJobForm extends Component {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClick, false);
+
+    if (this.props.modal.edit) {
+      this.setState({
+        ...this.props.currentJob
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -36,7 +42,7 @@ class NewJobForm extends Component {
     this.handleClickOutside();
   };
 
-  handleClickOutside = () => this.props.showModal(false);
+  handleClickOutside = () => this.props.openModal(false);
 
   handleChange = evt => {
     const { name, value } = evt.target;
@@ -52,16 +58,19 @@ class NewJobForm extends Component {
     });
   };
 
-  handleSubmit = () => this.props.postJob(this.state);
+  handleSubmit = () =>
+    this.props.modal.edit
+      ? this.props.updateJob(this.state)
+      : this.props.postJob(this.state);
 
-  handleCheckbox = cat => event => {
+  handleCheckbox = catId => event => {
     if (event.target.checked) {
       this.setState({
-        categories: [...this.state.categories, cat.id]
+        categories: [...this.state.categories, catId]
       });
     } else {
       this.setState({
-        categories: this.state.categories.filter(_cat => _cat.id !== cat.id)
+        categories: this.state.categories.filter(_cat => _cat !== catId)
       });
     }
   };
@@ -108,8 +117,9 @@ class NewJobForm extends Component {
                     key={cat.id}
                     control={
                       <Checkbox
+                        checked={this.state.categories.includes(cat.id)}
                         value={cat.name}
-                        onChange={this.handleCheckbox(cat)}
+                        onChange={this.handleCheckbox(cat.id)}
                       />
                     }
                     label={cat.name}
@@ -177,13 +187,19 @@ const FormContainer = styled.div`
   }
 `;
 
-const mapStateToProps = ({ category: { categories } }) => ({
-  categories
+const mapStateToProps = ({
+  category: { categories },
+  job: { currentJob, modal }
+}) => ({
+  categories,
+  currentJob,
+  modal
 });
 
 const mapActionsToProps = {
   postJob,
-  showModal
+  openModal,
+  updateJob
 };
 
 export default connect(

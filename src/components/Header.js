@@ -9,13 +9,13 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 // Redux
 import { connect } from "react-redux";
-import { showModal } from "../redux/actions/jobActions";
+import { openModal } from "../redux/actions/jobActions";
 
 // Components
 import CustomButton from "./CustomButton";
 
 class Header extends React.Component {
-  handleClick = () => this.props.showModal(true);
+  handleClick = () => this.props.openModal({ show: true, edit: false });
 
   render() {
     return (
@@ -61,5 +61,5 @@ const HeaderContainer = styled.header`
 
 export default connect(
   null,
-  { showModal }
+  { openModal }
 )(Header);
