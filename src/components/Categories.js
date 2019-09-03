@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
+import "./category.css";
 
 // Redux
 import { connect } from "react-redux";
@@ -81,21 +84,27 @@ class Categories extends Component {
           </div>
           <div>
             {categories && (
-              <ul>
+              <TransitionGroup component="ul">
                 {categories.map(cat => {
                   return (
-                    <li key={cat.id}>
-                      {cat.name}{" "}
-                      <CustomButton
-                        title="Delete"
-                        onClick={() => this.deleteCategory(cat.id)}
-                      >
-                        <DeleteIcon color="secondary" />
-                      </CustomButton>
-                    </li>
+                    <CSSTransition
+                      key={cat.id}
+                      timeout={{ enter: 500, exit: 300 }}
+                      classNames="move"
+                    >
+                      <li>
+                        {cat.name}{" "}
+                        <CustomButton
+                          title="Delete"
+                          onClick={() => this.deleteCategory(cat.id)}
+                        >
+                          <DeleteIcon color="secondary" />
+                        </CustomButton>
+                      </li>
+                    </CSSTransition>
                   );
                 })}
-              </ul>
+              </TransitionGroup>
             )}
           </div>
         </form>
