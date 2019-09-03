@@ -89,7 +89,7 @@ class Categories extends Component {
                   return (
                     <CSSTransition
                       key={cat.id}
-                      timeout={{ enter: 500, exit: 300 }}
+                      timeout={{ enter: 500, exit: 500 }}
                       classNames="move"
                     >
                       <li>
