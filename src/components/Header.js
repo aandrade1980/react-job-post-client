@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 
 // MUI
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import HomeIcon from "@material-ui/icons/Home";
-import NewIcon from "@material-ui/icons/OpenInNew";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import { AppBar, Toolbar } from "@material-ui/core";
+import { Home, OpenInNew, FormatListBulleted } from "@material-ui/icons";
 
 // Redux
 import { connect } from "react-redux";
@@ -24,7 +21,6 @@ class Header extends React.Component {
   handleClick = () => this.props.openModal({ show: true, edit: false });
 
   render() {
-    console.log("props => ", this.props);
     const { classes, title } = this.props;
     return (
       <AppBar position="sticky" className={classes.appBar}>
@@ -36,13 +32,13 @@ class Header extends React.Component {
           </h1>
           <nav>
             <CustomButton title="Home" component={Link} to="/">
-              <HomeIcon className={classes.svg_white} />
+              <Home className={classes.svg_white} />
             </CustomButton>
             <CustomButton title="New Job" onClick={this.handleClick}>
-              <NewIcon className={classes.svg_white} />
+              <OpenInNew className={classes.svg_white} />
             </CustomButton>
             <CustomButton title="Categories" component={Link} to="/Categories">
-              <FormatListBulletedIcon className={classes.svg_white} />
+              <FormatListBulleted className={classes.svg_white} />
             </CustomButton>
           </nav>
         </Toolbar>

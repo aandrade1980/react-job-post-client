@@ -34,6 +34,7 @@ export const postCategory = categoryName => async dispatch => {
         type: "TOGGLE_SPINNER",
         payload: { loading: false, success: true }
       });
+      // Set back the button to the normal color
       setTimeout(
         () =>
           dispatch({

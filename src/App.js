@@ -16,8 +16,7 @@ import NewJobForm from "./components/NewJobForm";
 import Categories from "./components/Categories";
 
 // MUI
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme(themeFile);
 

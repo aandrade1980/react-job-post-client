@@ -1,5 +1,4 @@
-import blue from "@material-ui/core/colors/blue";
-import green from "@material-ui/core/colors/green";
+import { blue, green } from "@material-ui/core/colors";
 
 export default {
   palette: {
