@@ -70,7 +70,6 @@ const JobItemContainer = styled.article`
   border-radius: 0.25rem;
   transition: 0.3s;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.5);
-  padding: 10px;
   cursor: pointer;
   &:hover {
     transform: scale(1.05);
@@ -81,12 +80,13 @@ const JobItemContainer = styled.article`
   }
   h3 {
     text-align: center;
-    max-width: 90%;
+    margin-left: 40px;
+    margin-right: 40px;
   }
   button {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 1px;
+    right: 1px;
   }
   .dayjs-container {
     display: flex;

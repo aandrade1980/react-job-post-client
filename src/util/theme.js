@@ -17,7 +17,7 @@ export default {
       color: "whitesmoke"
     }
   },
-  category: {
+  spinner: {
     successButton: {
       backgroundColor: green[500],
       "&:hover": {

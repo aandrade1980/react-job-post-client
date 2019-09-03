@@ -17,13 +17,21 @@ import CustomButton from "./CustomButton";
 import Spinner from "./Spinner";
 
 const styles = theme => ({
-  ...theme.category,
+  ...theme.spinner,
   container: {
     display: "flex"
   },
   wrapper: {
     marginLeft: theme.spacing(2),
     position: "relative"
+  },
+  form: {
+    margin: 50,
+    padding: 30,
+    width: "fit-content",
+    backgroundColor: "whitesmoke",
+    border: "solid 1px lightgrey",
+    borderRadius: 4
   }
 });
 
@@ -54,7 +62,7 @@ class Categories extends Component {
 
     return (
       <div>
-        <form style={{ margin: "50px" }} onSubmit={this.handleSubmit}>
+        <form className={classes.form} onSubmit={this.handleSubmit}>
           <div className={classes.container}>
             <div>
               <TextField

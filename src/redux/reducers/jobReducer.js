@@ -1,7 +1,8 @@
 const initialState = {
   jobs: null,
   currentJob: {},
-  modal: { show: false, edit: false }
+  modal: { show: false, edit: false },
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -20,7 +21,7 @@ export default function(state = initialState, action) {
     case "ADD_JOB":
       return {
         ...state,
-        jobs: [action.payload, ...state.jobs]
+        jobs: state.jobs ? [action.payload, ...state.jobs] : [action.payload]
       };
     case "DELETE_JOB":
       return {
@@ -59,6 +60,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         modal: action.payload
+      };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.payload
       };
     default:
       return state;

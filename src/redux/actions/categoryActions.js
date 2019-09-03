@@ -14,7 +14,7 @@ export const postCategory = categoryName => async dispatch => {
   try {
     dispatch({
       type: "TOGGLE_SPINNER",
-      payload: { loading: true, success: false }
+      payload: { loading: true }
     });
     const response = await fetch(`${API_URL}/category`, {
       method: "POST",
@@ -39,7 +39,7 @@ export const postCategory = categoryName => async dispatch => {
         () =>
           dispatch({
             type: "TOGGLE_SPINNER",
-            payload: { loading: false, success: false }
+            payload: { success: false }
           }),
         1500
       );
