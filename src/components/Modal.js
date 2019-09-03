@@ -10,7 +10,8 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 2;
+  /* MUI appBar has z-index 1100 */
+  z-index: 1101;
 `;
 
 export default ModalContainer;

@@ -21,6 +21,10 @@ export const getJobById = jobId => dispatch =>
     );
 
 export const postJob = job => dispatch => {
+  dispatch({
+    type: "SET_LOADING",
+    payload: true
+  });
   const data = new FormData();
 
   data.append("title", job.title);
@@ -37,12 +41,16 @@ export const postJob = job => dispatch => {
 
   fetch(`${API_URL}/job`, postOptions)
     .then(res => res.json())
-    .then(data =>
+    .then(data => {
       dispatch({
         type: "ADD_JOB",
         payload: data
-      })
-    )
+      });
+      dispatch({
+        type: "SET_LOADING",
+        payload: false
+      });
+    })
     .finally(() => {
       dispatch({
         type: "TOGGLE_MODAL",

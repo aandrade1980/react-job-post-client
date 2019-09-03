@@ -31,7 +31,7 @@ class Jobs extends Component {
     const { jobs } = this.props;
 
     return (
-      <section>
+      <section style={styles.section}>
         <ul style={styles.ul}>
           {jobs ? (
             jobs.map((job, index) => (
@@ -58,12 +58,16 @@ class Jobs extends Component {
 }
 
 const styles = {
+  section: {
+    backgroundColor: "#f3f3f3"
+  },
   ul: {
     listStyle: "none",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-evenly",
-    marginTop: "15px"
+    margin: 0,
+    padding: "15px 0 0"
   }
 };
 

@@ -6,10 +6,18 @@ import { connect } from "react-redux";
 import { postJob, updateJob, openModal } from "../redux/actions/jobActions";
 
 // MUI
+import { withStyles } from "@material-ui/core/styles";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Button, TextField } from "@material-ui/core";
+
+// Components
+import Spinner from "./Spinner";
+
+const styles = theme => ({
+  ...theme.spinner
+});
 
 class NewJobForm extends Component {
   state = {
@@ -58,10 +66,12 @@ class NewJobForm extends Component {
     });
   };
 
-  handleSubmit = () =>
+  handleSubmit = evt => {
+    evt.preventDefault();
     this.props.modal.edit
       ? this.props.updateJob(this.state)
       : this.props.postJob(this.state);
+  };
 
   handleCheckbox = catId => event => {
     if (event.target.checked) {
@@ -76,9 +86,11 @@ class NewJobForm extends Component {
   };
 
   render() {
+    console.log("loading => ", this.props.loading);
+    const { loading, classes } = this.props;
     return (
       <FormContainer ref={node => (this.node = node)}>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div>
             <TextField
               type="text"
@@ -87,6 +99,7 @@ class NewJobForm extends Component {
               value={this.state.title}
               onChange={this.handleChange}
               placeholder="Title"
+              required
             />
           </div>
           <div>
@@ -147,12 +160,16 @@ class NewJobForm extends Component {
           </div>
           <div className="buttonContainer">
             <Button
+              type="submit"
               variant="contained"
               color="primary"
-              onClick={this.handleSubmit}
+              disabled={loading}
             >
               Submit
             </Button>
+            {loading && (
+              <Spinner size={24} className={classes.buttonProgress} />
+            )}
           </div>
         </form>
       </FormContainer>
@@ -180,20 +197,21 @@ const FormContainer = styled.div`
       border-radius: 0.25rem;
     }
     .buttonContainer {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
+      position: relative;
+      margin-left: auto;
+      width: fit-content;
     }
   }
 `;
 
 const mapStateToProps = ({
   category: { categories },
-  job: { currentJob, modal }
+  job: { currentJob, modal, loading }
 }) => ({
   categories,
   currentJob,
-  modal
+  modal,
+  loading
 });
 
 const mapActionsToProps = {
@@ -205,4 +223,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(NewJobForm);
+)(withStyles(styles)(NewJobForm));
