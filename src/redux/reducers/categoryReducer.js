@@ -1,5 +1,7 @@
 const initialState = {
-  categories: []
+  categories: [],
+  loading: false,
+  success: false
 };
 
 export default function(state = initialState, action) {
@@ -18,6 +20,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         categories: state.categories.filter(cat => cat.id !== action.payload)
+      };
+    case "TOGGLE_SPINNER":
+      return {
+        ...state,
+        ...action.payload
       };
     default:
       return state;

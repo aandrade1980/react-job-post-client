@@ -69,12 +69,11 @@ const JobItemContainer = styled.article`
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
   transition: 0.3s;
-  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.5);
   padding: 10px;
   cursor: pointer;
   &:hover {
     transform: scale(1.05);
-    box-shadow: 2px 4px 40px 0 rgba(0, 0, 0, 0.08);
   }
   img {
     max-width: 100%;

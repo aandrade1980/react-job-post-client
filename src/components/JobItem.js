@@ -79,7 +79,7 @@ const JobItemContainer = styled.article`
     height: auto;
     width: 50%;
     max-width: 500px;
-    margin: 0 15px;
+    margin: 0 25px;
   }
 `;
 

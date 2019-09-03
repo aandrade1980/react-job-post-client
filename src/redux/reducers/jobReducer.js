@@ -1,5 +1,5 @@
 const initialState = {
-  jobs: [],
+  jobs: null,
   currentJob: {},
   modal: { show: false, edit: false }
 };
