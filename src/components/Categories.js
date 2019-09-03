@@ -5,11 +5,24 @@ import { connect } from "react-redux";
 import { postCategory, deleteCategory } from "../redux/actions/categoryActions";
 
 // MUI
+import { withStyles } from "@material-ui/core/styles";
 import { Button, TextField } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 
 // Components
 import CustomButton from "./CustomButton";
+import Spinner from "./Spinner";
+
+const styles = theme => ({
+  ...theme.category,
+  container: {
+    display: "flex"
+  },
+  wrapper: {
+    marginLeft: theme.spacing(2),
+    position: "relative"
+  }
+});
 
 class Categories extends Component {
   state = {
@@ -23,33 +36,48 @@ class Categories extends Component {
     });
   };
 
-  handleSubmit = () => this.props.postCategory(this.state.categoryName);
+  handleSubmit = evt => {
+    evt.preventDefault();
+    this.props.postCategory(this.state.categoryName);
+    this.setState({
+      categoryName: ""
+    });
+  };
 
   deleteCategory = catId => this.props.deleteCategory(catId);
 
   render() {
-    const { categories } = this.props;
+    const { categories, loading, success, classes } = this.props;
 
     return (
       <div>
-        <form style={{ margin: "50px" }}>
-          <div style={{ marginBottom: "25px" }}>
-            <TextField
-              type="text"
-              name="categoryName"
-              id="categoryName"
-              value={this.state.categoryName}
-              onChange={this.handleChange}
-              placeholder="Category Name..."
-            />
-            <Button
-              style={{ marginLeft: "15px" }}
-              variant="contained"
-              color="primary"
-              onClick={this.handleSubmit}
-            >
-              Submit
-            </Button>
+        <form style={{ margin: "50px" }} onSubmit={this.handleSubmit}>
+          <div className={classes.container}>
+            <div>
+              <TextField
+                type="text"
+                name="categoryName"
+                id="categoryName"
+                value={this.state.categoryName}
+                onChange={this.handleChange}
+                placeholder="Category Name..."
+                required
+              />
+            </div>
+            <div className={classes.wrapper}>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                type="submit"
+                className={success ? classes.successButton : ""}
+              >
+                Submit
+              </Button>
+              {loading && (
+                <Spinner size={24} className={classes.buttonProgress} />
+              )}
+            </div>
           </div>
           <div>
             {categories && (
@@ -62,7 +90,7 @@ class Categories extends Component {
                         title="Delete"
                         onClick={() => this.deleteCategory(cat.id)}
                       >
-                        <DeleteIcon color="error" />
+                        <DeleteIcon color="secondary" />
                       </CustomButton>
                     </li>
                   );
@@ -76,11 +104,13 @@ class Categories extends Component {
   }
 }
 
-const mapStateToProps = ({ category: { categories } }) => ({
-  categories
+const mapStateToProps = ({ category: { categories, loading, success } }) => ({
+  categories,
+  loading,
+  success
 });
 
 export default connect(
   mapStateToProps,
   { postCategory, deleteCategory }
-)(Categories);
+)(withStyles(styles)(Categories));

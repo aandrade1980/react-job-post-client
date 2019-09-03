@@ -6,6 +6,8 @@ import { getAllJobs, reOrderJobs } from "../redux/actions/jobActions";
 
 // Components
 import JobCard from "./JobCard";
+import ModalContainer from "./Modal";
+import Spinner from "./Spinner";
 
 class Jobs extends Component {
   state = {
@@ -31,7 +33,7 @@ class Jobs extends Component {
     return (
       <section>
         <ul style={styles.ul}>
-          {jobs &&
+          {jobs ? (
             jobs.map((job, index) => (
               <li
                 key={job.jobId}
@@ -43,7 +45,12 @@ class Jobs extends Component {
                   setDraggedItem={this.setDraggedItem}
                 />
               </li>
-            ))}
+            ))
+          ) : (
+            <ModalContainer>
+              <Spinner />
+            </ModalContainer>
+          )}
         </ul>
       </section>
     );

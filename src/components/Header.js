@@ -1,11 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // MUI
-import HomeIcon from "@material-ui/icons/Home";
-import NewIcon from "@material-ui/icons/OpenInNew";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import { withStyles } from "@material-ui/core/styles";
+import { AppBar, Toolbar } from "@material-ui/core";
+import { Home, OpenInNew, FormatListBulleted } from "@material-ui/icons";
 
 // Redux
 import { connect } from "react-redux";
@@ -14,52 +13,41 @@ import { openModal } from "../redux/actions/jobActions";
 // Components
 import CustomButton from "./CustomButton";
 
+const styles = theme => ({
+  ...theme.appBar
+});
+
 class Header extends React.Component {
   handleClick = () => this.props.openModal({ show: true, edit: false });
 
   render() {
+    const { classes, title } = this.props;
     return (
-      <HeaderContainer>
-        <div>
-          <h1>{this.props.title}</h1>
+      <AppBar position="sticky" className={classes.appBar}>
+        <Toolbar>
+          <h1 className={classes.h1}>
+            <Link to="/" className={classes.a}>
+              {title}
+            </Link>
+          </h1>
           <nav>
             <CustomButton title="Home" component={Link} to="/">
-              <HomeIcon />
+              <Home className={classes.svg_white} />
             </CustomButton>
             <CustomButton title="New Job" onClick={this.handleClick}>
-              <NewIcon />
+              <OpenInNew className={classes.svg_white} />
             </CustomButton>
             <CustomButton title="Categories" component={Link} to="/Categories">
-              <FormatListBulletedIcon />
+              <FormatListBulleted className={classes.svg_white} />
             </CustomButton>
           </nav>
-        </div>
-      </HeaderContainer>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
-const HeaderContainer = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  color: whitesmoke;
-  div {
-    background-color: #3f51b5;
-    display: flex;
-    justify-content: flex-start;
-    height: 75px;
-    align-items: center;
-    h1 {
-      margin: 0 45px;
-    }
-  }
-  svg {
-    color: whitesmoke;
-  }
-`;
-
 export default connect(
   null,
   { openModal }
-)(Header);
+)(withStyles(styles)(Header));

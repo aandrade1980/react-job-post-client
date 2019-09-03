@@ -11,19 +11,42 @@ export const getAllCategories = () => dispatch =>
     );
 
 export const postCategory = categoryName => async dispatch => {
-  const response = await fetch(`${API_URL}/category`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ name: categoryName })
-  });
-  const newCategory = await response.json();
-  dispatch({
-    type: "ADD_CATEGORY",
-    payload: newCategory
-  });
+  try {
+    dispatch({
+      type: "TOGGLE_SPINNER",
+      payload: { loading: true, success: false }
+    });
+    const response = await fetch(`${API_URL}/category`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name: categoryName })
+    });
+    if (response.status === 200) {
+      const newCategory = await response.json();
+      dispatch({
+        type: "ADD_CATEGORY",
+        payload: newCategory
+      });
+      dispatch({
+        type: "TOGGLE_SPINNER",
+        payload: { loading: false, success: true }
+      });
+      // Set back the button to the normal color
+      setTimeout(
+        () =>
+          dispatch({
+            type: "TOGGLE_SPINNER",
+            payload: { loading: false, success: false }
+          }),
+        1500
+      );
+    }
+  } catch (error) {
+    console.log("Error posting category: ", error);
+  }
 };
 
 export const deleteCategory = categoryId => async dispatch => {
