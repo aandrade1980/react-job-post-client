@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import themeFile from "./util/theme";
 
+// Netlify
+import netlifyIdentity from "netlify-identity-widget";
+
 // Redux
 import { connect } from "react-redux";
 import { getAllCategories } from "./redux/actions/categoryActions";
@@ -17,12 +20,27 @@ import Categories from "./components/Categories";
 
 // MUI
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { loginUser, logoutUser } from "./util/identifyActions";
 
 const theme = createMuiTheme(themeFile);
 
 class App extends React.Component {
+  state = {
+    user: null
+  };
+
   componentDidMount() {
+    const user = localStorage.getItem("currentUser");
+    if (user) {
+      this.setState({ user: JSON.parse(user) });
+    } else {
+      netlifyIdentity.open();
+    }
     this.props.getAllCategories();
+    netlifyIdentity.on("login", user => this.setState({ user }, loginUser()));
+    netlifyIdentity.on("logout", () =>
+      this.setState({ user: null }, logoutUser())
+    );
   }
 
   render() {
