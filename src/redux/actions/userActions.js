@@ -3,9 +3,24 @@ import netlifyIdentity from "netlify-identity-widget";
 
 export const loginUser = () => dispatch => {
   if (netlifyIdentity && netlifyIdentity.currentUser()) {
+    const {
+      app_metadata,
+      created_at,
+      confirmed_at,
+      email,
+      id,
+      user_metadata
+    } = netlifyIdentity.currentUser();
     dispatch({
       type: "SET_USER",
-      payload: netlifyIdentity.currentUser()
+      payload: {
+        ...app_metadata,
+        created_at,
+        confirmed_at,
+        email,
+        id,
+        ...user_metadata
+      }
     });
   }
 };

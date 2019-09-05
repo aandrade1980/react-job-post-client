@@ -28,13 +28,14 @@ netlifyIdentity.init();
 
 class App extends React.Component {
   componentDidMount() {
-    console.log("Current User => ", netlifyIdentity.currentUser());
-    if (!this.props.user) {
-      netlifyIdentity.open();
+    const { currentUser } = this.props;
+
+    if (!currentUser && netlifyIdentity.currentUser()) {
+      this.props.loginUser();
     }
 
-    if (!this.props.user && netlifyIdentity.currentUser()) {
-      this.props.loginUser();
+    if (!currentUser) {
+      netlifyIdentity.open();
     }
 
     netlifyIdentity.on("login", () => this.props.loginUser());
@@ -62,7 +63,6 @@ class App extends React.Component {
           </MuiThemeProvider>
         ) : (
           // TODO: make a page to show to the user if the user close the modal and is not logged in...
-          netlifyIdentity.open()
         )}
       </Router>
     );
