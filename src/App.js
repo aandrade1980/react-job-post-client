@@ -63,6 +63,10 @@ class App extends React.Component {
           </MuiThemeProvider>
         ) : (
           // TODO: make a page to show to the user if the user close the modal and is not logged in...
+          <span>
+            TODO: make a page to show to the user if the user close the modal
+            and is not logged in...
+          </span>
         )}
       </Router>
     );
