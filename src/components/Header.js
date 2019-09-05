@@ -12,6 +12,7 @@ import { openModal } from "../redux/actions/jobActions";
 
 // Components
 import CustomButton from "./CustomButton";
+import LoginAvatar from "./LoginAvatar";
 
 const styles = theme => ({
   ...theme.appBar
@@ -41,6 +42,7 @@ class Header extends React.Component {
               <FormatListBulleted className={classes.svg_white} />
             </CustomButton>
           </nav>
+          <LoginAvatar />
         </Toolbar>
       </AppBar>
     );

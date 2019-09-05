@@ -26,6 +26,19 @@ const theme = createMuiTheme(themeFile);
 
 netlifyIdentity.init();
 
+// const currentUser = {
+//   avatar_url:
+//     "https://lh3.googleusercontent.com/a-/AAuE7mDpye2cUha0uDA4_W6vwO1Qbr_QvrfGbMwLSaMGfQ",
+//   confirmed_at: "2019-09-04T22:39:48Z",
+//   created_at: "2019-09-04T22:39:48Z",
+//   email: "varito1@gmail.com",
+//   full_name: "Alvaro Andrade",
+//   id: "6deab5c6-b676-4f92-8a48-a82acb3d0785",
+//   provider: "google"
+// };
+
+// localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
 class App extends React.Component {
   state = {
     user: null
@@ -48,8 +61,8 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <MuiThemeProvider theme={theme}>
-          {this.state.user && (
+        {this.state.user && (
+          <MuiThemeProvider theme={theme}>
             <div className="App">
               <Header title="Jobs" />
               {this.props.modal.show && (
@@ -61,8 +74,8 @@ class App extends React.Component {
               <Route path="/Categories" exact component={Categories} />
               <Route path="/job/:jobId" component={JobItem} />
             </div>
-          )}
-        </MuiThemeProvider>
+          </MuiThemeProvider>
+        )}
       </Router>
     );
   }
