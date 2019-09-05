@@ -28,8 +28,13 @@ netlifyIdentity.init();
 
 class App extends React.Component {
   componentDidMount() {
+    console.log("Current User => ", netlifyIdentity.currentUser());
     if (!this.props.user) {
       netlifyIdentity.open();
+    }
+
+    if (!this.props.user && netlifyIdentity.currentUser()) {
+      this.props.loginUser();
     }
 
     netlifyIdentity.on("login", () => this.props.loginUser());
