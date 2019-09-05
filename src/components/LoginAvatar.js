@@ -1,12 +1,18 @@
 import React from "react";
 
-const LoginAvatar = () => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  console.log("Current user => ", currentUser.avatar_url);
+// Redux
+import { connect } from "react-redux";
+import { logoutUser } from "../redux/actions/userActions";
+
+const LoginAvatar = ({ user, logoutUser }) => {
+  const handleClick = () => logoutUser();
 
   return (
-    <div style={{ marginLeft: "auto" }}>
-      <img style={styles.img} src={currentUser.avatar_url} alt="User Avatar" />
+    <div
+      style={{ marginLeft: "auto", cursor: "pointer" }}
+      onClick={handleClick}
+    >
+      <img style={styles.img} src={user && user.avatar_url} alt="User Avatar" />
     </div>
   );
 };
@@ -20,4 +26,11 @@ const styles = {
   }
 };
 
-export default LoginAvatar;
+const mapStateToProps = ({ user: { user } }) => ({
+  user
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(LoginAvatar);

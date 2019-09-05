@@ -21,58 +21,27 @@ import Categories from "./components/Categories";
 
 // MUI
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-// import { loginUser, logoutUser } from "./util/identifyActions";
 
 const theme = createMuiTheme(themeFile);
 
 netlifyIdentity.init();
 
-// const currentUser = {
-//   avatar_url:
-//     "https://lh3.googleusercontent.com/a-/AAuE7mDpye2cUha0uDA4_W6vwO1Qbr_QvrfGbMwLSaMGfQ",
-//   confirmed_at: "2019-09-04T22:39:48Z",
-//   created_at: "2019-09-04T22:39:48Z",
-//   email: "varito1@gmail.com",
-//   full_name: "Alvaro Andrade",
-//   id: "6deab5c6-b676-4f92-8a48-a82acb3d0785",
-//   provider: "google"
-// };
-
-// localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
 class App extends React.Component {
-  // state = {
-  //   user: null
-  // };
-
   componentDidMount() {
-    console.log("User in APP component => ", this.props.user);
     if (!this.props.user) {
       netlifyIdentity.open();
     }
 
-    netlifyIdentity.on("login", this.props.loginUser());
-    netlifyIdentity.on("logout", this.props.logoutUser());
+    netlifyIdentity.on("login", () => this.props.loginUser());
+    netlifyIdentity.on("logout", () => this.props.logoutUser());
 
     this.props.getAllCategories();
-
-    // const user = localStorage.getItem("currentUser");
-    // if (user) {
-    //   this.setState({ user: JSON.parse(user) });
-    // } else {
-    //   netlifyIdentity.open();
-    // }
-    // this.props.getAllCategories();
-    // netlifyIdentity.on("login", user => this.setState({ user }, loginUser()));
-    // netlifyIdentity.on("logout", () =>
-    //   this.setState({ user: null }, logoutUser())
-    // );
   }
 
   render() {
     return (
       <Router>
-        {this.props.user && (
+        {this.props.user ? (
           <MuiThemeProvider theme={theme}>
             <div className="App">
               <Header title="Jobs" />
@@ -86,6 +55,9 @@ class App extends React.Component {
               <Route path="/job/:jobId" component={JobItem} />
             </div>
           </MuiThemeProvider>
+        ) : (
+          // TODO: make a page to show to the user if the user close the modal and is not logged in...
+          netlifyIdentity.open()
         )}
       </Router>
     );
