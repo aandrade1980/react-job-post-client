@@ -25,8 +25,10 @@ export const loginUser = () => dispatch => {
   }
 };
 
-export const logoutUser = () => dispatch =>
+export const logoutUser = () => async dispatch => {
+  netlifyIdentity.currentUser() && (await netlifyIdentity.logout());
   dispatch({
     type: "SET_USER",
     payload: null
   });
+};
