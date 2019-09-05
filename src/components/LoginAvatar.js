@@ -12,17 +12,20 @@ const LoginAvatar = ({ user, logoutUser }) => {
       style={{ marginLeft: "auto", cursor: "pointer" }}
       onClick={handleClick}
     >
-      <img style={styles.img} src={user && user.avatar_url} alt="User Avatar" />
+      <img
+        style={styles.img}
+        src={user && user.avatar_url}
+        alt={user.full_name}
+      />
     </div>
   );
 };
 
 const styles = {
   img: {
-    height: 55,
+    height: 42,
     width: "auto",
-    borderRadius: "50%",
-    border: "solid 1px"
+    borderRadius: "50%"
   }
 };
 
