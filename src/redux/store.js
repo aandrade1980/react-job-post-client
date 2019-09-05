@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 
 import jobReducer from "./reducers/jobReducer";
 import categoryReducer from "./reducers/categoryReducer";
+import userReducer from "./reducers/userReducer";
 
 const initialState = {};
 
@@ -10,7 +11,8 @@ const middleware = [thunk];
 
 const reducers = combineReducers({
   job: jobReducer,
-  category: categoryReducer
+  category: categoryReducer,
+  user: userReducer
 });
 
 const composeEnhancers =

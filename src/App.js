@@ -3,9 +3,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import themeFile from "./util/theme";
 
+// Netlify
+import netlifyIdentity from "netlify-identity-widget";
+
 // Redux
 import { connect } from "react-redux";
 import { getAllCategories } from "./redux/actions/categoryActions";
+import { loginUser, logoutUser } from "./redux/actions/userActions";
 
 // Components
 import Header from "./components/Header";
@@ -20,37 +24,52 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme(themeFile);
 
+netlifyIdentity.init();
+
 class App extends React.Component {
   componentDidMount() {
+    if (!this.props.user) {
+      netlifyIdentity.open();
+    }
+
+    netlifyIdentity.on("login", () => this.props.loginUser());
+    netlifyIdentity.on("logout", () => this.props.logoutUser());
+
     this.props.getAllCategories();
   }
 
   render() {
     return (
       <Router>
-        <MuiThemeProvider theme={theme}>
-          <div className="App">
-            <Header title="Jobs" />
-            {this.props.modal.show && (
-              <ModalContainer>
-                <NewJobForm />
-              </ModalContainer>
-            )}
-            <Route path="/" exact component={Jobs} />
-            <Route path="/Categories" exact component={Categories} />
-            <Route path="/job/:jobId" component={JobItem} />
-          </div>
-        </MuiThemeProvider>
+        {this.props.user ? (
+          <MuiThemeProvider theme={theme}>
+            <div className="App">
+              <Header title="Jobs" />
+              {this.props.modal.show && (
+                <ModalContainer>
+                  <NewJobForm />
+                </ModalContainer>
+              )}
+              <Route path="/" exact component={Jobs} />
+              <Route path="/Categories" exact component={Categories} />
+              <Route path="/job/:jobId" component={JobItem} />
+            </div>
+          </MuiThemeProvider>
+        ) : (
+          // TODO: make a page to show to the user if the user close the modal and is not logged in...
+          netlifyIdentity.open()
+        )}
       </Router>
     );
   }
 }
 
-const mapStateToProps = ({ job: { modal } }) => ({
-  modal
+const mapStateToProps = ({ job: { modal }, user: { user } }) => ({
+  modal,
+  user
 });
 
 export default connect(
   mapStateToProps,
-  { getAllCategories }
+  { getAllCategories, loginUser, logoutUser }
 )(App);
