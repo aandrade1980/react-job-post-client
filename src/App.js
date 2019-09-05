@@ -63,11 +63,7 @@ class App extends React.Component {
           </MuiThemeProvider>
         ) : (
           // TODO: make a page to show to the user if the user close the modal and is not logged in...
-          <>
-            TODO: make a page to show to the user if the user close the modal
-            and is not logged in...
-            {netlifyIdentity.open()}
-          </>
+          netlifyIdentity.open()
         )}
       </Router>
     );
