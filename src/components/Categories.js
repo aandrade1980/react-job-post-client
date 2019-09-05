@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import "./category.css";
@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-class Categories extends Component {
+class Categories extends React.Component {
   state = {
     categoryName: ""
   };

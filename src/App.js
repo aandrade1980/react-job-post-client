@@ -18,6 +18,7 @@ import JobItem from "./components/JobItem";
 import ModalContainer from "./components/Modal";
 import NewJobForm from "./components/NewJobForm";
 import Categories from "./components/Categories";
+import AuthenticatingButtons from "./components/AuthenticatingButtons";
 
 // MUI
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -34,10 +35,6 @@ class App extends React.Component {
       this.props.loginUser();
     }
 
-    if (!currentUser) {
-      netlifyIdentity.open();
-    }
-
     netlifyIdentity.on("login", () => this.props.loginUser());
     netlifyIdentity.on("logout", () => this.props.logoutUser());
 
@@ -47,8 +44,8 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        {this.props.user ? (
-          <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={theme}>
+          {this.props.user ? (
             <div className="App">
               <Header title="Jobs" />
               {this.props.modal.show && (
@@ -60,11 +57,10 @@ class App extends React.Component {
               <Route path="/Categories" exact component={Categories} />
               <Route path="/job/:jobId" component={JobItem} />
             </div>
-          </MuiThemeProvider>
-        ) : (
-          // TODO: make a page to show to the user if the user close the modal and is not logged in...
-          netlifyIdentity.open()
-        )}
+          ) : (
+            <AuthenticatingButtons netlifyIdentity={netlifyIdentity} />
+          )}
+        </MuiThemeProvider>
       </Router>
     );
   }
