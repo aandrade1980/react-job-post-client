@@ -1,4 +1,4 @@
-import { blue, green } from "@material-ui/core/colors";
+import { blue, green, teal } from "@material-ui/core/colors";
 
 export default {
   palette: {
@@ -31,6 +31,15 @@ export default {
       left: "50%",
       marginTop: -12,
       marginLeft: -12
+    }
+  },
+  authenticatingButtons: {
+    buttons: {
+      backgroundColor: teal[400],
+      color: "white",
+      "&:hover": {
+        backgroundColor: teal[700]
+      }
     }
   }
 };
