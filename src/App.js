@@ -46,6 +46,7 @@ class App extends React.Component {
   // };
 
   componentDidMount() {
+    console.log("User in APP component => ", this.props.user);
     if (!this.props.user) {
       netlifyIdentity.open();
     }
