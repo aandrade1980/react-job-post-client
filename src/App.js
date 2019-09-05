@@ -24,6 +24,8 @@ import { loginUser, logoutUser } from "./util/identifyActions";
 
 const theme = createMuiTheme(themeFile);
 
+netlifyIdentity.init();
+
 class App extends React.Component {
   state = {
     user: null
@@ -47,17 +49,19 @@ class App extends React.Component {
     return (
       <Router>
         <MuiThemeProvider theme={theme}>
-          <div className="App">
-            <Header title="Jobs" />
-            {this.props.modal.show && (
-              <ModalContainer>
-                <NewJobForm />
-              </ModalContainer>
-            )}
-            <Route path="/" exact component={Jobs} />
-            <Route path="/Categories" exact component={Categories} />
-            <Route path="/job/:jobId" component={JobItem} />
-          </div>
+          {this.state.user && (
+            <div className="App">
+              <Header title="Jobs" />
+              {this.props.modal.show && (
+                <ModalContainer>
+                  <NewJobForm />
+                </ModalContainer>
+              )}
+              <Route path="/" exact component={Jobs} />
+              <Route path="/Categories" exact component={Categories} />
+              <Route path="/job/:jobId" component={JobItem} />
+            </div>
+          )}
         </MuiThemeProvider>
       </Router>
     );
