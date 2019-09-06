@@ -123,7 +123,7 @@ class NewJobForm extends Component {
             />
           </div>
           <div>
-            <FormGroup>
+            <FormGroup style={{ maxHeight: "250px" }}>
               {this.props.categories.map(cat => {
                 return (
                   <FormControlLabel
