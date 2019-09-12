@@ -222,6 +222,9 @@ const FormContainer = styled.div`
       display: inline-block;
       margin-right: 8px;
     }
+    textarea {
+      height: 125px;
+    }
   }
 `;
 
