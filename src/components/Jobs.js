@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 
 // Redux
 import { connect } from "react-redux";
@@ -44,7 +45,7 @@ class Jobs extends Component {
 
     return (
       <section style={styles.section}>
-        <ul style={styles.ul}>
+        <Ul>
           {jobs ? (
             jobs.map((job, index) => {
               return (
@@ -69,25 +70,29 @@ class Jobs extends Component {
               <Spinner />
             </ModalContainer>
           )}
-        </ul>
+        </Ul>
       </section>
     );
   }
 }
 
+const Ul = styled.ul`
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 0 10px;
+  grid-auto-rows: 80px;
+  justify-items: center;
+  margin: 0;
+  padding: 15px 30px;
+  @media only screen and (max-device-width: 667px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+`;
+
 const styles = {
   section: {
     backgroundColor: "#f3f3f3"
-  },
-  ul: {
-    listStyle: "none",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
-    gridGap: "0 10px",
-    gridAutoRows: "80px",
-    justifyItems: "center",
-    margin: 0,
-    padding: "15px 30px 0"
   }
 };
 

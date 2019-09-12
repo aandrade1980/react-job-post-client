@@ -159,6 +159,14 @@ class NewJobForm extends Component {
           </div>
           <div className="buttonContainer">
             <Button
+              type="button"
+              variant="text"
+              onClick={() => this.props.openModal(false)}
+              className="cancelButton"
+            >
+              Cancel
+            </Button>
+            <Button
               type="submit"
               variant="contained"
               color="primary"
@@ -199,6 +207,20 @@ const FormContainer = styled.div`
       position: relative;
       margin-left: auto;
       width: fit-content;
+    }
+  }
+  .cancelButton {
+    display: none;
+  }
+  @media only screen and (max-device-width: 667px) {
+    border-radius: 0;
+    width: 100vw;
+    form {
+      min-width: auto;
+    }
+    .cancelButton {
+      display: inline-block;
+      margin-right: 8px;
     }
   }
 `;
