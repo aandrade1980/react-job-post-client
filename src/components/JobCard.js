@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import dayjs from "dayjs";
@@ -21,9 +21,21 @@ const JobCard = ({
   history,
   deleteJob,
   setDraggedItem,
+  setSpans,
   job
 }) => {
   dayjs.extend(relativeTime);
+  
+  const imageRef = useRef(null);
+
+  useEffect(() => imageRef.current.addEventListener('load', calculateSpans));
+
+  const calculateSpans = () => {
+    const height = imageRef.current.clientHeight;
+    const spans = Math.ceil(height / 80 + 1);
+
+    setSpans({ [jobId]: spans });
+  }
 
   const goToJob = () => history.push(`/job/${jobId}`);
 
@@ -54,12 +66,12 @@ const JobCard = ({
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon color="error" />
       </CustomButton>
-      {image && <img src={image} alt="Job" />}
+      {image && <img ref={imageRef} src={image} alt="Job" />}
     </JobItemContainer>
   );
 };
 
-const JobItemContainer = styled.article`
+const JobItemContainer = styled.article` 
   position: relative;
   width: 350px;
   height: fit-content;

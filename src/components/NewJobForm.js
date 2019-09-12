@@ -86,7 +86,6 @@ class NewJobForm extends Component {
   };
 
   render() {
-    console.log("loading => ", this.props.loading);
     const { loading, classes } = this.props;
     return (
       <FormContainer ref={node => (this.node = node)}>
