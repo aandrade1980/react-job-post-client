@@ -28,13 +28,16 @@ class Jobs extends Component {
     this.props.reOrderJobs(this.state, position);
   };
 
-  setSpans = jobIdSpans  => this.setState({ jobImageSpans: [...this.state.jobImageSpans, jobIdSpans ] });
+  setSpans = jobIdSpans =>
+    this.setState({ jobImageSpans: [...this.state.jobImageSpans, jobIdSpans] });
 
   getJobImageSpans = jobId => {
-    const spans = this.state.jobImageSpans.find(job => Object.keys(job).includes(jobId));
+    const spans = this.state.jobImageSpans.find(job =>
+      Object.keys(job).includes(jobId)
+    );
 
     return spans && spans[jobId];
-  }
+  };
 
   render() {
     const { jobs } = this.props;
@@ -44,18 +47,22 @@ class Jobs extends Component {
         <ul style={styles.ul}>
           {jobs ? (
             jobs.map((job, index) => {
-              return (<li
-                style={{ gridRowEnd: `span ${this.getJobImageSpans(job.jobId)}` }}
-                key={job.jobId}
-                onDragOver={evt => this.onDragOver(evt, job, index)}
-              >
-                <JobCard
+              return (
+                <li
+                  style={{
+                    gridRowEnd: `span ${this.getJobImageSpans(job.jobId)}`
+                  }}
                   key={job.jobId}
-                  job={job}
-                  setDraggedItem={this.setDraggedItem}
-                  setSpans={this.setSpans}
-                />
-              </li>)
+                  onDragOver={evt => this.onDragOver(evt, job, index)}
+                >
+                  <JobCard
+                    key={job.jobId}
+                    job={job}
+                    setDraggedItem={this.setDraggedItem}
+                    setSpans={this.setSpans}
+                  />
+                </li>
+              );
             })
           ) : (
             <ModalContainer>
@@ -74,15 +81,13 @@ const styles = {
   },
   ul: {
     listStyle: "none",
-    // display: "flex",
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-    gridGap: '0 10px',
-    gridAutoRows: '80px',
-    // flexWrap: "wrap",
-    // justifyContent: "space-evenly",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+    gridGap: "0 10px",
+    gridAutoRows: "80px",
+    justifyItems: "center",
     margin: 0,
-    padding: "15px 0 0"
+    padding: "15px 30px 0"
   }
 };
 
