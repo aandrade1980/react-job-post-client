@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,7 +6,7 @@ import { parseCategories } from "../util/Functions";
 
 // Redux
 import { connect } from "react-redux";
-import { openModal } from "../redux/actions/jobActions";
+import { openModal, setSelectedJob } from "../redux/actions/jobActions";
 
 // Components
 import CustomButton from "./CustomButton";
@@ -17,11 +17,15 @@ import EditIcon from "@material-ui/icons/Edit";
 // Hooks
 import { useSelectedJob } from '../hooks/jobHooks';
 
-const JobItem = ({ openModal, match: { params: { jobId } }, categories, }) => {
+const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelectedJob }) => {
 
   const handleEdit = () => openModal({ show: true, edit: true });
 
   const selectedJob = useSelectedJob(jobId);
+
+  useEffect(() => {
+    setSelectedJob(selectedJob)
+  }, [selectedJob, setSelectedJob])
 
   const {
     title,
@@ -91,5 +95,5 @@ const mapStateToProps = ({
 
 export default connect(
   mapStateToProps,
-  { openModal }
+  { openModal, setSelectedJob }
 )(withRouter(JobItem));

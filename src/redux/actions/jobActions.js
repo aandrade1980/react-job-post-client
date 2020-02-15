@@ -99,3 +99,9 @@ export const openModal = options => dispatch =>
     type: "TOGGLE_MODAL",
     payload: options
   });
+
+export const setSelectedJob = job => dispatch =>
+  dispatch({
+    type: "SET_JOB",
+    payload: job
+  })
