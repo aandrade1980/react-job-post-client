@@ -29,13 +29,13 @@ const JobCard = ({
   const imageRef = useRef(null);
 
   const calculateSpans = useCallback(() => {
-    const height = imageRef?.current?.clientHeight;
+    const height = imageRef && imageRef.current && imageRef.current.clientHeight;
     const spans = Math.ceil(height / 80 + 1);
 
     setSpans({ [jobId]: spans });
   }, [setSpans, jobId]);
 
-  useEffect(() => imageRef?.current?.addEventListener('load', calculateSpans), [calculateSpans]);
+  useEffect(() => imageRef && imageRef.current && imageRef.current.addEventListener('load', calculateSpans), [calculateSpans]);
 
   const goToJob = () => history.push(`/job/${jobId}`);
 
