@@ -18,35 +18,32 @@ const styles = theme => ({
   ...theme.appBar
 });
 
-class Header extends React.Component {
-  handleClick = () => this.props.openModal({ show: true, edit: false });
+const Header = ({ openModal, classes, title }) => {
+  const handleClick = () => openModal({ show: true, edit: false });
 
-  render() {
-    const { classes, title } = this.props;
-    return (
-      <AppBar position="sticky" className={classes.appBar}>
-        <Toolbar>
-          <h1 className={classes.h1}>
-            <Link to="/" className={classes.a}>
-              {title}
-            </Link>
-          </h1>
-          <nav>
-            <CustomButton title="Home" component={Link} to="/">
-              <Home className={classes.svg_white} />
-            </CustomButton>
-            <CustomButton title="New Job" onClick={this.handleClick}>
-              <OpenInNew className={classes.svg_white} />
-            </CustomButton>
-            <CustomButton title="Categories" component={Link} to="/Categories">
-              <FormatListBulleted className={classes.svg_white} />
-            </CustomButton>
-          </nav>
-          <LoginAvatar />
-        </Toolbar>
-      </AppBar>
-    );
-  }
+  return (
+    <AppBar position="sticky" className={classes.appBar}>
+      <Toolbar>
+        <h1 className={classes.h1}>
+          <Link to="/" className={classes.a}>
+            {title}
+          </Link>
+        </h1>
+        <nav>
+          <CustomButton title="Home" component={Link} to="/">
+            <Home className={classes.svg_white} />
+          </CustomButton>
+          <CustomButton title="New Job" onClick={handleClick}>
+            <OpenInNew className={classes.svg_white} />
+          </CustomButton>
+          <CustomButton title="Categories" component={Link} to="/Categories">
+            <FormatListBulleted className={classes.svg_white} />
+          </CustomButton>
+        </nav>
+        <LoginAvatar />
+      </Toolbar>
+    </AppBar>
+  );
 }
 
 export default connect(
