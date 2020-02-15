@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import "./category.css";
@@ -35,90 +35,78 @@ const styles = theme => ({
   }
 });
 
-class Categories extends React.Component {
-  state = {
-    categoryName: ""
-  };
+const Categories = ({ categories, loading, success, classes, postCategory, deleteCategory }) => {
+  const [categoryName, setCategoryName] = useState("");
 
-  handleChange = evt => {
-    const { name, value } = evt.target;
-    this.setState({
-      [name]: value
-    });
-  };
+  const handleChange = evt =>
+    setCategoryName(evt.target.value)
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    this.props.postCategory(this.state.categoryName);
-    this.setState({
-      categoryName: ""
-    });
+    postCategory(categoryName);
+    setCategoryName("");
   };
 
-  deleteCategory = catId => this.props.deleteCategory(catId);
+  const deleteCat = catId => deleteCategory(catId);
 
-  render() {
-    const { categories, loading, success, classes } = this.props;
-
-    return (
-      <div>
-        <form className={classes.form} onSubmit={this.handleSubmit}>
-          <div className={classes.container}>
-            <div>
-              <TextField
-                type="text"
-                name="categoryName"
-                id="categoryName"
-                value={this.state.categoryName}
-                onChange={this.handleChange}
-                placeholder="Category Name..."
-                required
-              />
-            </div>
-            <div className={classes.wrapper}>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                type="submit"
-                className={success ? classes.successButton : ""}
-              >
-                Submit
-              </Button>
-              {loading && (
-                <Spinner size={24} className={classes.buttonProgress} />
-              )}
-            </div>
-          </div>
+  return (
+    <div>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <div className={classes.container}>
           <div>
-            {categories && (
-              <TransitionGroup component="ul">
-                {categories.map(cat => {
-                  return (
-                    <CSSTransition
-                      key={cat.id}
-                      timeout={{ enter: 500, exit: 500 }}
-                      classNames="move"
-                    >
-                      <li>
-                        {cat.name}{" "}
-                        <CustomButton
-                          title="Delete"
-                          onClick={() => this.deleteCategory(cat.id)}
-                        >
-                          <DeleteIcon color="secondary" />
-                        </CustomButton>
-                      </li>
-                    </CSSTransition>
-                  );
-                })}
-              </TransitionGroup>
+            <TextField
+              type="text"
+              name="categoryName"
+              id="categoryName"
+              value={categoryName}
+              onChange={handleChange}
+              placeholder="Category Name..."
+              required
+            />
+          </div>
+          <div className={classes.wrapper}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              type="submit"
+              className={success ? classes.successButton : ""}
+            >
+              Submit
+              </Button>
+            {loading && (
+              <Spinner size={24} className={classes.buttonProgress} />
             )}
           </div>
-        </form>
-      </div>
-    );
-  }
+        </div>
+        <div>
+          {categories && (
+            <TransitionGroup component="ul">
+              {categories.map(cat => {
+                return (
+                  <CSSTransition
+                    key={cat.id}
+                    timeout={{ enter: 500, exit: 500 }}
+                    classNames="move"
+                  >
+                    <li>
+                      {cat.name}{" "}
+                      <CustomButton
+                        title="Delete"
+                        onClick={() => deleteCat(cat.id)}
+                      >
+                        <DeleteIcon color="secondary" />
+                      </CustomButton>
+                    </li>
+                  </CSSTransition>
+                );
+              })}
+            </TransitionGroup>
+          )}
+        </div>
+      </form>
+    </div>
+  );
 }
 
 const mapStateToProps = ({ category: { categories, loading, success } }) => ({
