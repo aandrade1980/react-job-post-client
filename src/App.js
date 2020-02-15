@@ -10,10 +10,11 @@ import netlifyIdentity from "netlify-identity-widget";
 import { connect } from "react-redux";
 import { getAllCategories } from "./redux/actions/categoryActions";
 import { loginUser, logoutUser } from "./redux/actions/userActions";
+import { getAllJobs } from "./redux/actions/jobActions";
 
 // Components
 import Header from "./components/Header";
-import Jobs from "./components/Jobs";
+import JobsContainer from "./components/Jobs";
 import JobItem from "./components/JobItem";
 import ModalContainer from "./components/Modal";
 import NewJobForm from "./components/NewJobForm";
@@ -27,43 +28,41 @@ const theme = createMuiTheme(themeFile);
 
 netlifyIdentity.init();
 
-class App extends React.Component {
-  componentDidMount() {
-    const { currentUser } = this.props;
+const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs, modal, user }) => {
 
+  React.useEffect(() => {
     if (!currentUser && netlifyIdentity.currentUser()) {
-      this.props.loginUser();
+      loginUser();
     }
 
-    netlifyIdentity.on("login", () => this.props.loginUser());
-    netlifyIdentity.on("logout", () => this.props.logoutUser());
+    netlifyIdentity.on("login", () => loginUser());
+    netlifyIdentity.on("logout", () => logoutUser());
 
-    this.props.getAllCategories();
-  }
+    getAllCategories();
+    getAllJobs();
+  }, [currentUser, getAllCategories, loginUser, logoutUser, getAllJobs])
 
-  render() {
-    return (
-      <Router>
-        <MuiThemeProvider theme={theme}>
-          {this.props.user ? (
-            <div className="App">
-              <Header title="Jobs" />
-              {this.props.modal.show && (
-                <ModalContainer>
-                  <NewJobForm />
-                </ModalContainer>
-              )}
-              <Route path="/" exact component={Jobs} />
-              <Route path="/Categories" exact component={Categories} />
-              <Route path="/job/:jobId" component={JobItem} />
-            </div>
-          ) : (
+  return (
+    <Router>
+      <MuiThemeProvider theme={theme}>
+        {user ? (
+          <div className="App">
+            <Header title="Jobs" />
+            {modal.show && (
+              <ModalContainer>
+                <NewJobForm />
+              </ModalContainer>
+            )}
+            <Route path="/" exact component={JobsContainer} />
+            <Route path="/Categories" exact component={Categories} />
+            <Route path="/job/:jobId" component={JobItem} />
+          </div>
+        ) : (
             <AuthenticatingButtons netlifyIdentity={netlifyIdentity} />
           )}
-        </MuiThemeProvider>
-      </Router>
-    );
-  }
+      </MuiThemeProvider>
+    </Router>
+  );
 }
 
 const mapStateToProps = ({ job: { modal }, user: { user } }) => ({
@@ -73,5 +72,5 @@ const mapStateToProps = ({ job: { modal }, user: { user } }) => ({
 
 export default connect(
   mapStateToProps,
-  { getAllCategories, loginUser, logoutUser }
+  { getAllCategories, getAllJobs, loginUser, logoutUser }
 )(App);

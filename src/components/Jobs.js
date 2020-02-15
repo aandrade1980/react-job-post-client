@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // Redux
 import { connect } from "react-redux";
-import { getAllJobs, reOrderJobs } from "../redux/actions/jobActions";
+import { reOrderJobs } from "../redux/actions/jobActions";
 
 // Components
 import JobCard from "./JobCard";
@@ -16,10 +16,6 @@ class Jobs extends Component {
     draggedOverItem: {},
     jobImageSpans: []
   };
-
-  componentDidMount() {
-    this.props.getAllJobs();
-  }
 
   setDraggedItem = item => this.setState({ draggedItem: item });
 
@@ -66,10 +62,10 @@ class Jobs extends Component {
               );
             })
           ) : (
-            <ModalContainer>
-              <Spinner />
-            </ModalContainer>
-          )}
+              <ModalContainer>
+                <Spinner />
+              </ModalContainer>
+            )}
         </Ul>
       </section>
     );
@@ -96,12 +92,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({
-  jobs: state.job.jobs
+const mapStateToProps = ({ job: { jobs } }) => ({
+  jobs
 });
 
 const mapActionsToProps = {
-  getAllJobs,
   reOrderJobs
 };
 

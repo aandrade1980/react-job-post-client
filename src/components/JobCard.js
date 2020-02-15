@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import dayjs from "dayjs";
@@ -25,17 +25,17 @@ const JobCard = ({
   job
 }) => {
   dayjs.extend(relativeTime);
-  
+
   const imageRef = useRef(null);
 
-  useEffect(() => imageRef.current.addEventListener('load', calculateSpans));
-
-  const calculateSpans = () => {
-    const height = imageRef.current.clientHeight;
+  const calculateSpans = useCallback(() => {
+    const height = imageRef?.current?.clientHeight;
     const spans = Math.ceil(height / 80 + 1);
 
     setSpans({ [jobId]: spans });
-  }
+  }, [setSpans, jobId]);
+
+  useEffect(() => imageRef?.current?.addEventListener('load', calculateSpans), [calculateSpans]);
 
   const goToJob = () => history.push(`/job/${jobId}`);
 
