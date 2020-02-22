@@ -7,10 +7,7 @@ import { postJob, updateJob, openModal } from "../redux/actions/jobActions";
 
 // MUI
 import { withStyles } from "@material-ui/core/styles";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import { Button, TextField } from "@material-ui/core";
+import { FormGroup, FormControlLabel, Checkbox, Button, TextField } from "@material-ui/core";
 
 // Components
 import Spinner from "./Spinner";

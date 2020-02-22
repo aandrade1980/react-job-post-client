@@ -15,13 +15,13 @@ import CustomButton from "./CustomButton";
 import EditIcon from "@material-ui/icons/Edit";
 
 // Hooks
-import { useSelectedJob } from '../hooks/jobHooks';
+import { useJobById } from '../hooks/jobHooks';
 
 const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelectedJob }) => {
 
   const handleEdit = () => openModal({ show: true, edit: true });
 
-  const selectedJob = useSelectedJob(jobId);
+  const selectedJob = useJobById(jobId);
 
   useEffect(() => {
     setSelectedJob(selectedJob)

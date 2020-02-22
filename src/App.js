@@ -17,7 +17,6 @@ import Header from "./components/Header";
 import JobsContainer from "./components/Jobs";
 import JobItem from "./components/JobItem";
 import ModalContainer from "./components/Modal";
-import NewJobForm from "./components/NewJobForm";
 import Categories from "./components/Categories";
 import AuthenticatingButtons from "./components/AuthenticatingButtons";
 
@@ -42,6 +41,8 @@ const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs,
     getAllJobs();
   }, [currentUser, getAllCategories, loginUser, logoutUser, getAllJobs])
 
+  const ModalComponent = modal.component;
+
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
@@ -50,7 +51,7 @@ const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs,
             <Header title="Jobs" />
             {modal.show && (
               <ModalContainer>
-                <NewJobForm />
+                <ModalComponent />
               </ModalContainer>
             )}
             <Route path="/" exact component={JobsContainer} />

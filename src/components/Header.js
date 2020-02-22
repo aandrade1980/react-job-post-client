@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // MUI
 import { withStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar } from "@material-ui/core";
-import { Home, OpenInNew, FormatListBulleted } from "@material-ui/icons";
+import { Home, OpenInNew, FormatListBulleted, FilterList } from "@material-ui/icons";
 
 // Redux
 import { connect } from "react-redux";
@@ -13,13 +13,20 @@ import { openModal } from "../redux/actions/jobActions";
 // Components
 import CustomButton from "./CustomButton";
 import LoginAvatar from "./LoginAvatar";
+import NewJobForm from "./NewJobForm";
+import Filter from "./Filter";
 
 const styles = theme => ({
   ...theme.appBar
 });
 
+const components = {
+  newJobForm: NewJobForm,
+  filter: Filter
+}
+
 const Header = ({ openModal, classes, title }) => {
-  const handleClick = () => openModal({ show: true, edit: false });
+  const handleClick = cmp => openModal({ show: true, edit: false, component: components[cmp] });
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -33,11 +40,14 @@ const Header = ({ openModal, classes, title }) => {
           <CustomButton title="Home" component={Link} to="/">
             <Home className={classes.svg_white} />
           </CustomButton>
-          <CustomButton title="New Job" onClick={handleClick}>
+          <CustomButton title="New Job" onClick={() => handleClick('newJobForm')}>
             <OpenInNew className={classes.svg_white} />
           </CustomButton>
           <CustomButton title="Categories" component={Link} to="/Categories">
             <FormatListBulleted className={classes.svg_white} />
+          </CustomButton>
+          <CustomButton title="Filter" onClick={() => handleClick('filter')}>
+            <FilterList className={classes.svg_white} />
           </CustomButton>
         </nav>
         <LoginAvatar />

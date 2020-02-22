@@ -37,13 +37,13 @@ class Jobs extends Component {
   };
 
   render() {
-    const { jobs } = this.props;
+    const { filteredJobs } = this.props;
 
     return (
       <section style={styles.section}>
         <Ul>
-          {jobs ? (
-            jobs.map((job, index) => {
+          {filteredJobs ? (
+            filteredJobs.map((job, index) => {
               return (
                 <li
                   style={{
@@ -92,8 +92,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ job: { jobs } }) => ({
-  jobs
+const mapStateToProps = ({ job: { filteredJobs } }) => ({
+  filteredJobs
 });
 
 const mapActionsToProps = {
