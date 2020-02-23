@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 
 // Redux
@@ -11,9 +11,22 @@ import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 
 const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const formContainerEl = useRef(null);
+
+  const handleClick = ({ target }) =>
+    !formContainerEl.current.contains(target) && handleClickOutside();
+
+  const handleClickOutside = () => openModal(false);
 
   useEffect(() => {
-    setFilteredJobs(selectedCategories)
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick)
+    }
+  }, []);
+
+  useEffect(() => {
+    setFilteredJobs(selectedCategories);
   }, [selectedCategories, setFilteredJobs])
 
   const handleCheckbox = (evt, catId) =>
@@ -23,7 +36,7 @@ const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
 
   const closeModal = () => openModal(false);
 
-  return <FormContainer>
+  return <FormContainer ref={formContainerEl}>
     <IconButton onClick={closeModal} style={{ position: 'absolute', right: 0, top: 0, padding: 5 }}>
       <CancelTwoToneIcon />
     </IconButton>
