@@ -7,7 +7,13 @@ import { postJob, updateJob, openModal } from "../redux/actions/jobActions";
 
 // MUI
 import { withStyles } from "@material-ui/core/styles";
-import { FormGroup, FormControlLabel, Checkbox, Button, TextField } from "@material-ui/core";
+import {
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  TextField
+} from "@material-ui/core";
 
 // Components
 import Spinner from "./Spinner";
@@ -39,13 +45,8 @@ class NewJobForm extends Component {
     document.removeEventListener("mousedown", this.handleClick, false);
   }
 
-  handleClick = evt => {
-    if (this.node.contains(evt.target)) {
-      return;
-    }
-
-    this.handleClickOutside();
-  };
+  handleClick = evt =>
+    !this.node.contains(evt.target) && this.handleClickOutside();
 
   handleClickOutside = () => this.props.openModal(false);
 
@@ -73,7 +74,9 @@ class NewJobForm extends Component {
   handleCheckbox = catId => event => {
     if (event.target.checked) {
       this.setState({
-        categories: [...this.state.categories, catId]
+        categories: Array.isArray(this.state.categories)
+          ? [...this.state.categories, catId]
+          : [this.state.categories, catId]
       });
     } else {
       this.setState({
