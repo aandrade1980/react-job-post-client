@@ -10,14 +10,13 @@ import { openModal, setSelectedJob } from "../redux/actions/jobActions";
 
 // Components
 import CustomButton from "./CustomButton";
+import { components } from "../util/Contants";
 
 // MUI
 import EditIcon from "@material-ui/icons/Edit";
 
 // Hooks
 import { useJobById } from "../hooks/jobHooks";
-
-import { components } from "../util/Contants";
 
 const JobItem = ({
   openModal,

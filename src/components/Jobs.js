@@ -17,7 +17,7 @@ class Jobs extends Component {
     jobImageSpans: []
   };
 
-  setDraggedItem = item => this.setState({ draggedItem: item });
+  setDraggedItem = draggedItem => this.setState({ draggedItem });
 
   onDragOver = (evt, job, position) => {
     evt.preventDefault();
@@ -62,10 +62,10 @@ class Jobs extends Component {
               );
             })
           ) : (
-              <ModalContainer>
-                <Spinner />
-              </ModalContainer>
-            )}
+            <ModalContainer>
+              <Spinner />
+            </ModalContainer>
+          )}
         </Ul>
       </section>
     );
@@ -100,7 +100,4 @@ const mapActionsToProps = {
   reOrderJobs
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(Jobs);
+export default connect(mapStateToProps, mapActionsToProps)(Jobs);

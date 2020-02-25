@@ -40,7 +40,7 @@ const JobCard = ({
     const img = imageRef && imageRef.current;
 
     img && img.addEventListener("load", calculateSpans);
-    return () => img.removeEventListener("load", calculateSpans);
+    return () => img && img.removeEventListener("load", calculateSpans);
   }, [calculateSpans]);
 
   const goToJob = () => history.push(`/job/${jobId}`);
