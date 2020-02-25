@@ -70,6 +70,10 @@ export const deleteJob = jobId => dispatch =>
   );
 
 export const updateJob = updatedJob => async dispatch => {
+  dispatch({
+    type: "SET_LOADING",
+    payload: true
+  });
   const response = await fetch(`${API_URL}/job/${updateJob.jobId}`, {
     method: "PUT",
     body: JSON.stringify(updatedJob),
@@ -88,6 +92,10 @@ export const updateJob = updatedJob => async dispatch => {
       type: "TOGGLE_MODAL",
       payload: { show: false, edit: false }
     });
+    dispatch({
+      type: "SET_LOADING",
+      payload: false
+    });
   }
 };
 
@@ -104,4 +112,10 @@ export const setSelectedJob = job => dispatch =>
   dispatch({
     type: "SET_JOB",
     payload: job
-  })
+  });
+
+export const setFilteredJobs = categories => dispatch =>
+  dispatch({
+    type: "SET_FILTERED_JOBS",
+    payload: categories
+  });

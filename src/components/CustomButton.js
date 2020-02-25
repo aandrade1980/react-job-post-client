@@ -1,6 +1,5 @@
 import React from "react";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
+import { Tooltip, IconButton } from "@material-ui/core"
 
 const CustomButton = ({ children, component, onClick, title, to }) => {
   return (

@@ -5,66 +5,86 @@ const initialState = {
   loading: false
 };
 
-export default function(state = initialState, action) {
-  switch (action.type) {
+export default function(state = initialState, { type, payload }) {
+  switch (type) {
     case "SET_JOBS":
       return {
         ...state,
-        jobs: action.payload,
+        jobs: payload,
+        filteredJobs: payload,
         currentJob: {}
       };
     case "SET_JOB":
       return {
         ...state,
-        currentJob: action.payload
+        currentJob: payload
+      };
+    case "SET_FILTERED_JOBS":
+      return {
+        ...state,
+        filteredJobs:
+          payload.length === 0
+            ? state.jobs
+            : state.jobs.filter(job => {
+                const categories =
+                  job.categories && !Array.isArray(job.categories)
+                    ? job.categories.split(",")
+                    : job.categories
+                    ? job.categories
+                    : [];
+                return categories.some(cat => payload.includes(cat));
+              })
       };
     case "ADD_JOB":
+      const updatedJobs = state.jobs ? [payload, ...state.jobs] : [payload];
       return {
         ...state,
-        jobs: state.jobs ? [action.payload, ...state.jobs] : [action.payload]
+        jobs: updatedJobs,
+        filteredJobs: updatedJobs
       };
     case "DELETE_JOB":
+      const newJobList = state.jobs.filter(({ jobId }) => jobId !== payload);
       return {
         ...state,
-        jobs: state.jobs.filter(job => job.jobId !== action.payload)
+        jobs: newJobList,
+        filteredJobs: newJobList
       };
     case "UPDATE_JOB":
+      const updatedJob = state.jobs.map(job => {
+        if (job.jobId !== payload.jobId) {
+          return job;
+        }
+        return {
+          ...payload
+        };
+      });
       return {
         ...state,
-        jobs: state.jobs.map(job => {
-          if (job.jobId !== action.payload.jobId) {
-            return job;
-          }
-          return {
-            ...action.payload
-          };
-        }),
-        currentJob: action.payload
+        jobs: updatedJob,
+        filteredJobs: updatedJob,
+        currentJob: payload
       };
     case "RE_ORDER_JOBS":
-      const filterJobs = state.jobs.filter(
-        job => job.jobId !== action.payload.items.draggedItem.jobId
+      const filteredJobs = state.jobs.filter(
+        ({ jobId }) => jobId !== payload.items.draggedItem.jobId
       );
 
-      filterJobs.splice(
-        action.payload.position,
-        0,
-        action.payload.items.draggedItem
-      );
+      filteredJobs.splice(payload.position, 0, payload.items.draggedItem);
 
       return {
         ...state,
-        jobs: filterJobs
+        jobs: filteredJobs,
+        filteredJobs
       };
     case "TOGGLE_MODAL":
       return {
         ...state,
-        modal: action.payload
+        modal: payload
       };
     case "SET_LOADING":
       return {
         ...state,
-        loading: action.payload
+        loading: payload
       };
     default:
       return state;

@@ -10,22 +10,30 @@ import { openModal, setSelectedJob } from "../redux/actions/jobActions";
 
 // Components
 import CustomButton from "./CustomButton";
+import { components } from "../util/Contants";
 
 // MUI
 import EditIcon from "@material-ui/icons/Edit";
 
 // Hooks
-import { useSelectedJob } from '../hooks/jobHooks';
+import { useJobById } from "../hooks/jobHooks";
 
-const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelectedJob }) => {
-
-  const handleEdit = () => openModal({ show: true, edit: true });
-
-  const selectedJob = useSelectedJob(jobId);
+const JobItem = ({
+  openModal,
+  match: {
+    params: { jobId }
+  },
+  categories,
+  setSelectedJob
+}) => {
+  const selectedJob = useJobById(jobId);
 
   useEffect(() => {
-    setSelectedJob(selectedJob)
-  }, [selectedJob, setSelectedJob])
+    setSelectedJob(selectedJob);
+  }, [selectedJob, setSelectedJob]);
+
+  const handleEdit = () =>
+    openModal({ show: true, edit: true, component: components["newJobForm"] });
 
   const {
     title,
@@ -36,10 +44,7 @@ const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelec
     categories: jobCategories
   } = selectedJob || {};
 
-  const categoriesToDisplay = parseCategories(
-    jobCategories,
-    categories
-  );
+  const categoriesToDisplay = parseCategories(jobCategories, categories);
 
   return (
     <section>
@@ -48,8 +53,8 @@ const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelec
           <h2>{title}</h2>
           {categoriesToDisplay && (
             <ul style={{ listStyleType: "square" }}>
-              {categoriesToDisplay.map(cat => (
-                <li key={cat.id}>{cat.name}</li>
+              {categoriesToDisplay.map(({ id, name }) => (
+                <li key={id}>{name}</li>
               ))}
             </ul>
           )}
@@ -59,14 +64,16 @@ const JobItem = ({ openModal, match: { params: { jobId } }, categories, setSelec
         </div>
         {image && <img src={image} alt="Job" />}
         <div>
-          {selectedJob && <CustomButton title="Edit" onClick={handleEdit}>
-            <EditIcon color="primary" />
-          </CustomButton>}
+          {selectedJob && (
+            <CustomButton title="Edit" onClick={handleEdit}>
+              <EditIcon color="primary" />
+            </CustomButton>
+          )}
         </div>
       </JobItemContainer>
     </section>
   );
-}
+};
 
 const JobItemContainer = styled.article`
   display: flex;
@@ -87,13 +94,10 @@ const JobItemContainer = styled.article`
   }
 `;
 
-const mapStateToProps = ({
-  category: { categories }
-}) => ({
+const mapStateToProps = ({ category: { categories } }) => ({
   categories
 });
 
-export default connect(
-  mapStateToProps,
-  { openModal, setSelectedJob }
-)(withRouter(JobItem));
+export default connect(mapStateToProps, { openModal, setSelectedJob })(
+  withRouter(JobItem)
+);
