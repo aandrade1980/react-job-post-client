@@ -29,13 +29,19 @@ const JobCard = ({
   const imageRef = useRef(null);
 
   const calculateSpans = useCallback(() => {
-    const height = imageRef && imageRef.current && imageRef.current.clientHeight;
+    const height =
+      imageRef && imageRef.current && imageRef.current.clientHeight;
     const spans = Math.ceil(height / 80 + 1);
 
     setSpans({ [jobId]: spans });
   }, [setSpans, jobId]);
 
-  useEffect(() => imageRef && imageRef.current && imageRef.current.addEventListener('load', calculateSpans), [calculateSpans]);
+  useEffect(() => {
+    const img = imageRef && imageRef.current;
+
+    img && img.addEventListener("load", calculateSpans);
+    return () => img.removeEventListener("load", calculateSpans);
+  }, [calculateSpans]);
 
   const goToJob = () => history.push(`/job/${jobId}`);
 
@@ -71,7 +77,7 @@ const JobCard = ({
   );
 };
 
-const JobItemContainer = styled.article` 
+const JobItemContainer = styled.article`
   position: relative;
   width: 350px;
   height: fit-content;
@@ -108,7 +114,4 @@ const JobItemContainer = styled.article`
   }
 `;
 
-export default connect(
-  null,
-  { deleteJob }
-)(withRouter(JobCard));
+export default connect(null, { deleteJob })(withRouter(JobCard));

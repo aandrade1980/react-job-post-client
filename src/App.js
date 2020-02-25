@@ -27,8 +27,15 @@ const theme = createMuiTheme(themeFile);
 
 netlifyIdentity.init();
 
-const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs, modal, user }) => {
-
+const App = ({
+  currentUser,
+  loginUser,
+  logoutUser,
+  getAllCategories,
+  getAllJobs,
+  modal,
+  user
+}) => {
   React.useEffect(() => {
     if (!currentUser && netlifyIdentity.currentUser()) {
       loginUser();
@@ -39,7 +46,7 @@ const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs,
 
     getAllCategories();
     getAllJobs();
-  }, [currentUser, getAllCategories, loginUser, logoutUser, getAllJobs])
+  }, [currentUser, getAllCategories, loginUser, logoutUser, getAllJobs]);
 
   const ModalComponent = modal.component;
 
@@ -59,19 +66,21 @@ const App = ({ currentUser, loginUser, logoutUser, getAllCategories, getAllJobs,
             <Route path="/job/:jobId" component={JobItem} />
           </div>
         ) : (
-            <AuthenticatingButtons netlifyIdentity={netlifyIdentity} />
-          )}
+          <AuthenticatingButtons netlifyIdentity={netlifyIdentity} />
+        )}
       </MuiThemeProvider>
     </Router>
   );
-}
+};
 
 const mapStateToProps = ({ job: { modal }, user: { user } }) => ({
   modal,
   user
 });
 
-export default connect(
-  mapStateToProps,
-  { getAllCategories, getAllJobs, loginUser, logoutUser }
-)(App);
+export default connect(mapStateToProps, {
+  getAllCategories,
+  getAllJobs,
+  loginUser,
+  logoutUser
+})(App);
