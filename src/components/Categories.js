@@ -32,14 +32,25 @@ const styles = theme => ({
     backgroundColor: "whitesmoke",
     border: "solid 1px lightgrey",
     borderRadius: 4
+  },
+  ul: {
+    display: "grid",
+    gridTemplateColumns: "auto auto",
+    gridColumnGap: 45
   }
 });
 
-const Categories = ({ categories, loading, success, classes, postCategory, deleteCategory }) => {
+const Categories = ({
+  categories,
+  loading,
+  success,
+  classes,
+  postCategory,
+  deleteCategory
+}) => {
   const [categoryName, setCategoryName] = useState("");
 
-  const handleChange = evt =>
-    setCategoryName(evt.target.value)
+  const handleChange = evt => setCategoryName(evt.target.value);
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -73,7 +84,7 @@ const Categories = ({ categories, loading, success, classes, postCategory, delet
               className={success ? classes.successButton : ""}
             >
               Submit
-              </Button>
+            </Button>
             {loading && (
               <Spinner size={24} className={classes.buttonProgress} />
             )}
@@ -81,7 +92,7 @@ const Categories = ({ categories, loading, success, classes, postCategory, delet
         </div>
         <div>
           {categories && (
-            <TransitionGroup component="ul">
+            <TransitionGroup component="ul" className={classes.ul}>
               {categories.map(cat => {
                 return (
                   <CSSTransition
@@ -107,7 +118,7 @@ const Categories = ({ categories, loading, success, classes, postCategory, delet
       </form>
     </div>
   );
-}
+};
 
 const mapStateToProps = ({ category: { categories, loading, success } }) => ({
   categories,
@@ -115,7 +126,6 @@ const mapStateToProps = ({ category: { categories, loading, success } }) => ({
   success
 });
 
-export default connect(
-  mapStateToProps,
-  { postCategory, deleteCategory }
-)(withStyles(styles)(Categories));
+export default connect(mapStateToProps, { postCategory, deleteCategory })(
+  withStyles(styles)(Categories)
+);
