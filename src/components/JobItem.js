@@ -44,7 +44,9 @@ const JobItem = ({
     categories: jobCategories
   } = selectedJob || {};
 
-  const categoriesToDisplay = parseCategories(jobCategories, categories);
+  const categoriesToDisplay = parseCategories(jobCategories, categories).filter(
+    cat => !!cat
+  );
 
   return (
     <section>
