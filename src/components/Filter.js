@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import styled from 'styled-components';
 
 // Redux
-import { connect } from "react-redux";
-import { setFilteredJobs, openModal } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { setFilteredJobs, openModal } from '../redux/actions/jobActions';
 
 // MUI
 import {
@@ -11,22 +11,24 @@ import {
   FormControlLabel,
   Checkbox,
   IconButton
-} from "@material-ui/core";
-import CancelTwoToneIcon from "@material-ui/icons/CancelTwoTone";
+} from '@material-ui/core';
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 
 const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const formContainerEl = useRef(null);
 
-  const handleClick = ({ target }) =>
-    !formContainerEl.current.contains(target) && handleClickOutside();
-
-  const handleClickOutside = () => openModal(false);
+  const handleClickCallback = useCallback(
+    ({ target }) => {
+      !formContainerEl.current.contains(target) && openModal(false);
+    },
+    [openModal]
+  );
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+    document.addEventListener('mousedown', handleClickCallback);
+    return () => document.removeEventListener('mousedown', handleClickCallback);
+  }, [handleClickCallback]);
 
   useEffect(() => {
     setFilteredJobs(selectedCategories);
@@ -43,11 +45,16 @@ const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
     <FormContainer ref={formContainerEl}>
       <IconButton
         onClick={closeModal}
-        style={{ position: "absolute", right: 0, top: 0, padding: 5 }}
+        style={{ position: 'absolute', right: 0, top: 0, padding: 5 }}
       >
         <CancelTwoToneIcon />
       </IconButton>
-      <FormGroup style={{ maxHeight: "250px" }}>
+      <FormGroup
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)'
+        }}
+      >
         {allCategories.map(({ id, name }) => {
           return (
             <FormControlLabel
@@ -69,7 +76,7 @@ const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
 };
 
 const FormContainer = styled.div`
-  position: relative
+  position: relative;
   background: whitesmoke;
   border-radius: 4px;
   padding: 25px;
