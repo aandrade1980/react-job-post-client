@@ -1,41 +1,41 @@
-import React, { useState } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import React, { useState } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import "./category.css";
+import './category.css';
 
 // Redux
-import { connect } from "react-redux";
-import { postCategory, deleteCategory } from "../redux/actions/categoryActions";
+import { connect } from 'react-redux';
+import { postCategory, deleteCategory } from '../redux/actions/categoryActions';
 
 // MUI
-import { withStyles } from "@material-ui/core/styles";
-import { Button, TextField } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/DeleteOutline";
+import { withStyles } from '@material-ui/core/styles';
+import { Button, TextField } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
 
 // Components
-import CustomButton from "./CustomButton";
-import Spinner from "./Spinner";
+import CustomButton from './CustomButton';
+import Spinner from './Spinner';
 
 const styles = theme => ({
   ...theme.spinner,
   container: {
-    display: "flex"
+    display: 'flex'
   },
   wrapper: {
     marginLeft: theme.spacing(2),
-    position: "relative"
+    position: 'relative'
   },
   form: {
     margin: 50,
     padding: 30,
-    width: "fit-content",
-    backgroundColor: "whitesmoke",
-    border: "solid 1px lightgrey",
+    width: 'fit-content',
+    backgroundColor: 'whitesmoke',
+    border: 'solid 1px lightgrey',
     borderRadius: 4
   },
   ul: {
-    display: "grid",
-    gridTemplateColumns: "auto auto",
+    display: 'grid',
+    gridTemplateColumns: 'auto auto',
     gridColumnGap: 45
   }
 });
@@ -48,14 +48,14 @@ const Categories = ({
   postCategory,
   deleteCategory
 }) => {
-  const [categoryName, setCategoryName] = useState("");
+  const [categoryName, setCategoryName] = useState('');
 
   const handleChange = evt => setCategoryName(evt.target.value);
 
   const handleSubmit = evt => {
     evt.preventDefault();
     postCategory(categoryName);
-    setCategoryName("");
+    setCategoryName('');
   };
 
   const deleteCat = catId => deleteCategory(catId);
@@ -81,7 +81,7 @@ const Categories = ({
               color="primary"
               disabled={loading}
               type="submit"
-              className={success ? classes.successButton : ""}
+              className={success ? classes.successButton : ''}
             >
               Submit
             </Button>
@@ -101,7 +101,7 @@ const Categories = ({
                     classNames="move"
                   >
                     <li>
-                      {cat.name}{" "}
+                      {cat.name}{' '}
                       <CustomButton
                         title="Delete"
                         onClick={() => deleteCat(cat.id)}
