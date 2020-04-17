@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Redux
-import { connect } from "react-redux";
-import { postJob, updateJob, openModal } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { postJob, updateJob, openModal } from '../redux/actions/jobActions';
 
 // MUI
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from '@material-ui/core/styles';
 import {
   FormGroup,
   FormControlLabel,
   Checkbox,
   Button,
   TextField
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Components
-import Spinner from "./Spinner";
+import Spinner from './Spinner';
 
 const styles = theme => ({
   ...theme.spinner
@@ -24,15 +24,15 @@ const styles = theme => ({
 
 class NewJobForm extends Component {
   state = {
-    title: "",
-    description: "",
-    company: "",
-    email: "",
+    title: '',
+    description: '',
+    company: '',
+    email: '',
     categories: []
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClick, false);
+    document.addEventListener('mousedown', this.handleClick, false);
 
     if (this.props.modal.edit) {
       this.setState({
@@ -42,7 +42,7 @@ class NewJobForm extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClick, false);
+    document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   handleClick = evt =>
@@ -122,7 +122,12 @@ class NewJobForm extends Component {
             />
           </div>
           <div>
-            <FormGroup style={{ maxHeight: "250px" }}>
+            <FormGroup
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)'
+              }}
+            >
               {this.props.categories.map(cat => {
                 return (
                   <FormControlLabel
