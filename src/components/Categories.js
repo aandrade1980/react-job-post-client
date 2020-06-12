@@ -6,6 +6,7 @@ import './category.css';
 // Redux
 import { connect } from 'react-redux';
 import { postCategory, deleteCategory } from '../redux/actions/categoryActions';
+import { toastMessage } from '../redux/actions/toastActions';
 
 // MUI
 import { withStyles } from '@material-ui/core/styles';
@@ -46,7 +47,8 @@ const Categories = ({
   success,
   classes,
   postCategory,
-  deleteCategory
+  deleteCategory,
+  toastMessage
 }) => {
   const [categoryName, setCategoryName] = useState('');
 
@@ -54,9 +56,22 @@ const Categories = ({
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    postCategory(categoryName);
-    setCategoryName('');
+    if (isValidCatName(categoryName)) {
+      postCategory(categoryName);
+      setCategoryName('');
+    } else {
+      toastMessage(
+        'Category Name cannot be empty',
+        true,
+        false,
+        false,
+        'top-center',
+        'error'
+      );
+    }
   };
+
+  const isValidCatName = catName => catName.trim() !== '';
 
   const deleteCat = catId => deleteCategory(catId);
 
@@ -126,6 +141,8 @@ const mapStateToProps = ({ category: { categories, loading, success } }) => ({
   success
 });
 
-export default connect(mapStateToProps, { postCategory, deleteCategory })(
-  withStyles(styles)(Categories)
-);
+export default connect(mapStateToProps, {
+  postCategory,
+  deleteCategory,
+  toastMessage
+})(withStyles(styles)(Categories));
