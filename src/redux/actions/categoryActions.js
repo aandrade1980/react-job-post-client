@@ -46,6 +46,18 @@ export const postCategory = categoryName => async dispatch => {
         1500
       );
     }
+    if (response.status === 422) {
+      dispatch({
+        type: 'TOGGLE_SPINNER',
+        payload: { loading: false, success: false }
+      });
+      const error = await response.json();
+      console.log('Error => ', error);
+
+      dispatch(
+        toastMessage(error.message, true, false, false, 'top-center', 'error')
+      );
+    }
   } catch (error) {
     console.log('Error posting category: ', error);
   }
