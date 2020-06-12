@@ -73,11 +73,13 @@ class NewJobForm extends Component {
 
   handleCheckbox = catId => event => {
     if (event.target.checked) {
-      this.setState({
-        categories: Array.isArray(this.state.categories)
-          ? [...this.state.categories, catId]
-          : [this.state.categories, catId]
-      });
+      if (Array.isArray(this.state.categories)) {
+        return this.setState({ categories: [...this.state.categories, catId] });
+      }
+      const categories = this.state.categories.split(',');
+      categories.push(catId);
+
+      this.setState({ categories });
     } else {
       this.setState({
         categories: this.state.categories.filter(_cat => _cat !== catId)
