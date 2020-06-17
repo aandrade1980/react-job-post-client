@@ -23,6 +23,11 @@ const styles = theme => ({
 });
 
 class NewJobForm extends Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+  }
+
   state = {
     title: '',
     description: '',
@@ -39,6 +44,8 @@ class NewJobForm extends Component {
         ...this.props.currentJob
       });
     }
+
+    this.textInput.current.focus();
   }
 
   componentWillUnmount() {
@@ -101,6 +108,7 @@ class NewJobForm extends Component {
               onChange={this.handleChange}
               placeholder="Title"
               required
+              inputRef={this.textInput}
             />
           </div>
           <div>
