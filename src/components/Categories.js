@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import './category.css';
@@ -50,7 +50,12 @@ const Categories = ({
   deleteCategory,
   toastMessage
 }) => {
+  const inputRef = createRef();
   const [categoryName, setCategoryName] = useState('');
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handleChange = evt => setCategoryName(evt.target.value);
 
@@ -88,6 +93,7 @@ const Categories = ({
               onChange={handleChange}
               placeholder="Category Name..."
               required
+              inputRef={inputRef}
             />
           </div>
           <div className={classes.wrapper}>

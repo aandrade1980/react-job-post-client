@@ -1,20 +1,20 @@
-import React, { useRef, useEffect, useCallback } from "react";
-import styled from "styled-components";
-import { withRouter } from "react-router-dom";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import React, { useRef, useEffect, useCallback } from 'react';
+import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import "../App.scss";
+import '../App.scss';
 
 // Redux
-import { connect } from "react-redux";
-import { deleteJob } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { deleteJob } from '../redux/actions/jobActions';
 
 // Components
-import CustomButton from "./CustomButton";
+import CustomButton from './CustomButton';
 
 // MUI
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const JobCard = ({
   job: { jobId, title, image, createdAt },
@@ -39,8 +39,8 @@ const JobCard = ({
   useEffect(() => {
     const img = imageRef && imageRef.current;
 
-    img && img.addEventListener("load", calculateSpans);
-    return () => img && img.removeEventListener("load", calculateSpans);
+    img && img.addEventListener('load', calculateSpans);
+    return () => img && img.removeEventListener('load', calculateSpans);
   }, [calculateSpans]);
 
   const goToJob = () => history.push(`/job/${jobId}`);
@@ -51,8 +51,8 @@ const JobCard = ({
   };
 
   const onDragStart = evt => {
-    evt.dataTransfer.effectAllowed = "move";
-    evt.dataTransfer.setData("text", "anything");
+    evt.dataTransfer.effectAllowed = 'move';
+    evt.dataTransfer.setData('text', 'anything');
     setDraggedItem(job);
   };
 
@@ -72,7 +72,7 @@ const JobCard = ({
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon color="error" />
       </CustomButton>
-      {image && <img ref={imageRef} src={image} alt="Job" />}
+      <img ref={imageRef} src={image} alt="Job" />
     </JobItemContainer>
   );
 };
