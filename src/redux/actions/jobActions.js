@@ -61,15 +61,23 @@ export const postJob = job => dispatch => {
     });
 };
 
-export const deleteJob = jobId => dispatch =>
-  fetch(`${API_URL}/job/${jobId}`, {
-    method: 'DELETE'
-  }).then(() =>
+export const deleteJob = jobId => async dispatch => {
+  try {
+    const response = await fetch(`${API_URL}/job/${jobId}`, {
+      method: 'DELETE'
+    });
+    const JsonResponse = await response.json();
     dispatch({
       type: 'DELETE_JOB',
       payload: jobId
-    })
-  );
+    });
+    dispatch(
+      toastMessage(JsonResponse.message, true, 2000, false, 'top-center')
+    );
+  } catch (error) {
+    console.log('Delete Job Error: ', error);
+  }
+};
 
 export const updateJob = updatedJob => async dispatch => {
   dispatch({
