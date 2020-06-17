@@ -55,6 +55,7 @@ const Categories = ({
 
   useEffect(() => {
     inputRef.current.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = evt => setCategoryName(evt.target.value);
