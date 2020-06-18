@@ -1,21 +1,51 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Redux
-import { connect } from "react-redux";
-import { reOrderJobs } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { reOrderJobs } from '../redux/actions/jobActions';
+
+// Material UI
+import Button from '@material-ui/core/Button';
 
 // Components
-import JobCard from "./JobCard";
-import ModalContainer from "./Modal";
-import Spinner from "./Spinner";
+import JobCard from './JobCard';
+import ModalContainer from './Modal';
+import Spinner from './Spinner';
 
 class Jobs extends Component {
+  constructor(props) {
+    super(props);
+    this.checkPosition = this.checkPosition.bind(this);
+  }
+
   state = {
     draggedItem: {},
     draggedOverItem: {},
-    jobImageSpans: []
+    jobImageSpans: [],
+    showMore: false,
+    showMoreBtnClass: 'hideMore-btn'
   };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.checkPosition);
+  }
+
+  componentWillUnmount() {
+    this.removeScrollEvent();
+  }
+
+  removeScrollEvent() {
+    window.removeEventListener('scroll', this.checkPosition);
+  }
+
+  checkPosition() {
+    const yPosition = window.scrollY;
+    if (yPosition > 600) {
+      this.setState({ showMoreBtnClass: 'showMore-btn' });
+      this.removeScrollEvent();
+    }
+  }
 
   setDraggedItem = draggedItem => this.setState({ draggedItem });
 
@@ -36,14 +66,16 @@ class Jobs extends Component {
     return spans && spans[jobId];
   };
 
+  showMoreJobs = () => this.setState({ showMore: true });
+
   render() {
     const { filteredJobs } = this.props;
-
+    const numberOfJobs = this.state.showMore ? filteredJobs.length : 10;
     return (
       <section style={styles.section}>
         <Ul>
           {filteredJobs ? (
-            filteredJobs.map((job, index) => {
+            filteredJobs.slice(0, numberOfJobs).map((job, index) => {
               return (
                 <li
                   style={{
@@ -67,6 +99,19 @@ class Jobs extends Component {
             </ModalContainer>
           )}
         </Ul>
+        <ShowMoreDiv>
+          {filteredJobs && !this.state.showMore && (
+            <Button
+              type="button"
+              color="primary"
+              variant="contained"
+              onClick={this.showMoreJobs}
+              className={this.state.showMoreBtnClass}
+            >
+              Show More
+            </Button>
+          )}
+        </ShowMoreDiv>
       </section>
     );
   }
@@ -86,9 +131,21 @@ const Ul = styled.ul`
   }
 `;
 
+const ShowMoreDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 25px;
+  .showMore-btn {
+    display: block;
+  }
+  .hideMore-btn {
+    display: none;
+  }
+`;
+
 const styles = {
   section: {
-    backgroundColor: "#f3f3f3"
+    backgroundColor: '#f3f3f3'
   }
 };
 
