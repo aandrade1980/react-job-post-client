@@ -104,9 +104,9 @@ class NewJobForm extends Component {
               type="text"
               name="title"
               id="title"
+              label="Title"
               value={this.state.title}
               onChange={this.handleChange}
-              placeholder="Title"
               required
               inputRef={this.textInput}
             />
@@ -118,7 +118,7 @@ class NewJobForm extends Component {
               id="company"
               value={this.state.company}
               onChange={this.handleChange}
-              placeholder="Company"
+              label="Company"
             />
           </div>
           <div>
@@ -128,7 +128,7 @@ class NewJobForm extends Component {
               id="email"
               value={this.state.email}
               onChange={this.handleChange}
-              placeholder="Email"
+              label="Email"
             />
           </div>
           <div>
