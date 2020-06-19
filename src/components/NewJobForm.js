@@ -168,7 +168,7 @@ class NewJobForm extends Component {
             <FormGroup
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)'
+                gridTemplateColumns: 'repeat(4, 1fr)'
               }}
             >
               {this.props.categories.map(cat => {
@@ -237,7 +237,7 @@ const FormContainer = styled.div`
   border-radius: 4px;
   padding: 25px;
   form {
-    min-width: 450px;
+    min-width: 550px;
     display: flex;
     flex-direction: column;
     div {

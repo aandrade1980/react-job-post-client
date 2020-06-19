@@ -17,7 +17,7 @@ import CustomButton from './CustomButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const JobCard = ({
-  job: { jobId, title, image, createdAt },
+  job: { jobId, title, image, createdAt, postedDate },
   history,
   deleteJob,
   setDraggedItem,
@@ -67,7 +67,10 @@ const JobCard = ({
     >
       <h3 className="ellipsis">{title}</h3>
       <div className="dayjs-container">
-        <span>({dayjs(createdAt).fromNow()})</span>
+        {postedDate && (
+          <span>Posted: {dayjs(postedDate).format('DD/MM/YYYY')}</span>
+        )}
+        <span>Created: {dayjs(createdAt).fromNow()}</span>
       </div>
       <CustomButton title="Delete" onClick={handleClick}>
         <DeleteIcon color="error" />
@@ -108,9 +111,13 @@ const JobItemContainer = styled.article`
   }
   .dayjs-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-top: -15px;
     font-size: 14px;
+    span:last-child {
+      margin-top: 5px;
+    }
   }
 `;
 
