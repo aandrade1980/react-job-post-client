@@ -15,6 +15,12 @@ import {
   TextField
 } from '@material-ui/core';
 
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from '@material-ui/pickers';
+
 // Components
 import Spinner from './Spinner';
 
@@ -26,6 +32,12 @@ class NewJobForm extends Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
+    this.removeClickOutsideEventListener = this.removeClickOutsideEventListener.bind(
+      this
+    );
+    this.addClickOutsideEventListener = this.addClickOutsideEventListener.bind(
+      this
+    );
   }
 
   state = {
@@ -33,11 +45,12 @@ class NewJobForm extends Component {
     description: '',
     company: '',
     email: '',
-    categories: []
+    categories: [],
+    postedDate: new Date()
   };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
+    this.addClickOutsideEventListener();
 
     if (this.props.modal.edit) {
       this.setState({
@@ -49,6 +62,14 @@ class NewJobForm extends Component {
   }
 
   componentWillUnmount() {
+    this.removeClickOutsideEventListener();
+  }
+
+  addClickOutsideEventListener() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  removeClickOutsideEventListener() {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
 
@@ -94,6 +115,8 @@ class NewJobForm extends Component {
     }
   };
 
+  handleDateChange = postedDate => this.setState({ postedDate });
+
   render() {
     const { loading, classes } = this.props;
     return (
@@ -121,6 +144,16 @@ class NewJobForm extends Component {
               placeholder="Company"
             />
           </div>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              value={this.state.postedDate}
+              onChange={this.handleDateChange}
+              label="Posted Date"
+              format="dd/MM/yyyy"
+              onOpen={this.removeClickOutsideEventListener}
+              onClose={this.addClickOutsideEventListener}
+            />
+          </MuiPickersUtilsProvider>
           <div>
             <TextField
               type="text"
@@ -222,6 +255,10 @@ const FormContainer = styled.div`
       position: relative;
       margin-left: auto;
       width: fit-content;
+    }
+    /* Posted Date field icon */
+    .MuiInputAdornment-root {
+      justify-content: flex-end;
     }
   }
   .cancelButton {

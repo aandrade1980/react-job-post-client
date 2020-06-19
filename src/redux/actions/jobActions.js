@@ -34,6 +34,7 @@ export const postJob = job => dispatch => {
   data.append('email', job.email);
   data.append('description', job.description);
   data.append('categories', job.categories);
+  data.append('postedDate', job.postedDate);
   job.image && data.append('image', job.image, job.image.name);
 
   const postOptions = {

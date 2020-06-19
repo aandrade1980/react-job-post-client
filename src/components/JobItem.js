@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
 
-import { parseCategories } from "../util/Functions";
+import { parseCategories } from '../util/Functions';
 
 // Redux
-import { connect } from "react-redux";
-import { openModal, setSelectedJob } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { openModal, setSelectedJob } from '../redux/actions/jobActions';
 
 // Components
-import CustomButton from "./CustomButton";
-import { components } from "../util/Contants";
+import CustomButton from './CustomButton';
+import { components } from '../util/Contants';
 
 // MUI
-import EditIcon from "@material-ui/icons/Edit";
+import EditIcon from '@material-ui/icons/Edit';
 
 // Hooks
-import { useJobById } from "../hooks/jobHooks";
+import { useJobById } from '../hooks/jobHooks';
 
 const JobItem = ({
   openModal,
@@ -33,10 +34,11 @@ const JobItem = ({
   }, [selectedJob, setSelectedJob]);
 
   const handleEdit = () =>
-    openModal({ show: true, edit: true, component: components["newJobForm"] });
+    openModal({ show: true, edit: true, component: components['newJobForm'] });
 
   const {
     title,
+    postedDate,
     company,
     email,
     image,
@@ -53,8 +55,11 @@ const JobItem = ({
       <JobItemContainer>
         <div>
           <h2>{title}</h2>
+          {postedDate && (
+            <h4>{`Posted On: ${dayjs(postedDate).format('DD/MM/YYYY')}`}</h4>
+          )}
           {categoriesToDisplay && (
-            <ul style={{ listStyleType: "square" }}>
+            <ul style={{ listStyleType: 'square' }}>
               {categoriesToDisplay.map(({ id, name }) => (
                 <li key={id}>{name}</li>
               ))}
