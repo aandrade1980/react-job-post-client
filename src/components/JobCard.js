@@ -93,7 +93,7 @@ const JobItemContainer = styled.article`
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.5);
   cursor: pointer;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
   img {
     max-width: 100%;

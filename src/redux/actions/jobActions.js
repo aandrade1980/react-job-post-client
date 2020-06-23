@@ -85,7 +85,7 @@ export const updateJob = updatedJob => async dispatch => {
     type: 'SET_LOADING',
     payload: true
   });
-  const response = await fetch(`${API_URL}/job/${updateJob.jobId}`, {
+  const data = await fetch(`${API_URL}/job/${updatedJob.jobId}`, {
     method: 'PUT',
     body: JSON.stringify(updatedJob),
     headers: {
@@ -94,21 +94,31 @@ export const updateJob = updatedJob => async dispatch => {
     }
   });
 
-  if (response.status === 200) {
+  const response = await data.json();
+
+  if (data.status === 200) {
     dispatch({
       type: 'UPDATE_JOB',
       payload: updatedJob
     });
-    dispatch({
-      type: 'TOGGLE_MODAL',
-      payload: { show: false, edit: false }
-    });
-    dispatch({
-      type: 'SET_LOADING',
-      payload: false
-    });
-    dispatch(toastMessage('Job Updated!'));
+
+    dispatch(toastMessage(response.message));
+  } else {
+    console.log('Error updating job: ', response.error);
+    dispatch(
+      toastMessage(response.error, true, false, false, 'top-center', 'error')
+    );
   }
+
+  dispatch({
+    type: 'SET_LOADING',
+    payload: false
+  });
+
+  dispatch({
+    type: 'TOGGLE_MODAL',
+    payload: { show: false, edit: false }
+  });
 };
 
 export const reOrderJobs = (items, position) => dispatch =>
