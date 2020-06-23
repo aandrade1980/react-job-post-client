@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Redux
-import { connect } from "react-redux";
-import { reOrderJobs } from "../redux/actions/jobActions";
+import { connect } from 'react-redux';
+import { reOrderJobs } from '../redux/actions/jobActions';
 
 // Components
-import JobCard from "./JobCard";
-import ModalContainer from "./Modal";
-import Spinner from "./Spinner";
+import JobCard from './JobCard';
+import ModalContainer from './Modal';
+import Spinner from './Spinner';
 
 class Jobs extends Component {
   state = {
@@ -88,7 +88,7 @@ const Ul = styled.ul`
 
 const styles = {
   section: {
-    backgroundColor: "#f3f3f3"
+    backgroundColor: '#f3f3f3'
   }
 };
 

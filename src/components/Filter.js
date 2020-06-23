@@ -15,7 +15,9 @@ import {
 import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 
 const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    JSON.parse(localStorage.getItem('selectedCategories')) || []
+  );
   const formContainerEl = useRef(null);
 
   const handleClickCallback = useCallback(
@@ -32,6 +34,10 @@ const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
 
   useEffect(() => {
     setFilteredJobs(selectedCategories);
+    localStorage.setItem(
+      'selectedCategories',
+      JSON.stringify(selectedCategories)
+    );
   }, [selectedCategories, setFilteredJobs]);
 
   const handleCheckbox = (evt, catId) =>
