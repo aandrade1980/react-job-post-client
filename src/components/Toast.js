@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { toast as toastify } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const Toast = ({ toast }) => {
+const Toast = () => {
+  const toast = useSelector(state => state.toast);
   React.useEffect(() => {
     toastify.configure(toast);
     if (toast.show) {
@@ -27,8 +28,4 @@ const Toast = ({ toast }) => {
   return null;
 };
 
-const mapStateToProps = ({ toast }) => ({
-  toast
-});
-
-export default connect(mapStateToProps)(Toast);
+export default Toast;
