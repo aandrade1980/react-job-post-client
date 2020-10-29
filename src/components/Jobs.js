@@ -33,7 +33,7 @@ class Jobs extends Component {
       Object.keys(job).includes(jobId)
     );
 
-    return spans && spans[jobId];
+    return spans && spans[jobId] + 1;
   };
 
   render() {
@@ -43,24 +43,22 @@ class Jobs extends Component {
       <section style={styles.section}>
         <Ul>
           {filteredJobs ? (
-            filteredJobs.map((job, index) => {
-              return (
-                <li
-                  style={{
-                    gridRowEnd: `span ${this.getJobImageSpans(job.jobId)}`
-                  }}
+            filteredJobs.map((job, index) => (
+              <li
+                style={{
+                  gridRowEnd: `span ${this.getJobImageSpans(job.jobId)}`
+                }}
+                key={job.jobId}
+                onDragOver={evt => this.onDragOver(evt, job, index)}
+              >
+                <JobCard
                   key={job.jobId}
-                  onDragOver={evt => this.onDragOver(evt, job, index)}
-                >
-                  <JobCard
-                    key={job.jobId}
-                    job={job}
-                    setDraggedItem={this.setDraggedItem}
-                    setSpans={this.setSpans}
-                  />
-                </li>
-              );
-            })
+                  job={job}
+                  setDraggedItem={this.setDraggedItem}
+                  setSpans={this.setSpans}
+                />
+              </li>
+            ))
           ) : (
             <ModalContainer>
               <Spinner />
