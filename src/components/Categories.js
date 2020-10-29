@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './category.css';
 
 // Redux
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { postCategory, deleteCategory } from '../redux/actions/categoryActions';
 import { toastMessage } from '../redux/actions/toastActions';
 
@@ -41,15 +41,11 @@ const styles = theme => ({
   }
 });
 
-const Categories = ({
-  categories,
-  loading,
-  success,
-  classes,
-  postCategory,
-  deleteCategory,
-  toastMessage
-}) => {
+const Categories = ({ classes }) => {
+  const categories = useSelector(state => state.category.categories);
+  const loading = useSelector(state => state.category.loading);
+  const success = useSelector(state => state.category.success);
+  const dispatch = useDispatch();
   const inputRef = createRef();
   const [categoryName, setCategoryName] = useState('');
 
@@ -63,23 +59,25 @@ const Categories = ({
   const handleSubmit = evt => {
     evt.preventDefault();
     if (isValidCatName(categoryName)) {
-      postCategory(categoryName);
+      dispatch(postCategory(categoryName));
       setCategoryName('');
     } else {
-      toastMessage(
-        'Category Name cannot be empty',
-        true,
-        false,
-        false,
-        'top-center',
-        'error'
+      dispatch(
+        toastMessage(
+          'Category Name cannot be empty',
+          true,
+          false,
+          false,
+          'top-center',
+          'error'
+        )
       );
     }
   };
 
   const isValidCatName = catName => catName.trim() !== '';
 
-  const deleteCat = catId => deleteCategory(catId);
+  const deleteCat = catId => dispatch(deleteCategory(catId));
 
   return (
     <div>
@@ -142,14 +140,4 @@ const Categories = ({
   );
 };
 
-const mapStateToProps = ({ category: { categories, loading, success } }) => ({
-  categories,
-  loading,
-  success
-});
-
-export default connect(mapStateToProps, {
-  postCategory,
-  deleteCategory,
-  toastMessage
-})(withStyles(styles)(Categories));
+export default withStyles(styles)(Categories);

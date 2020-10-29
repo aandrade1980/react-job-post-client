@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -7,7 +8,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import '../App.scss';
 
 // Redux
-import { connect } from 'react-redux';
 import { deleteJob } from '../redux/actions/jobActions';
 
 // Components
@@ -19,12 +19,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const JobCard = ({
   job: { jobId, title, image, createdAt, postedDate },
   history,
-  deleteJob,
   setDraggedItem,
   setSpans,
   job
 }) => {
   dayjs.extend(relativeTime);
+  const dispatch = useDispatch();
 
   const imageRef = useRef(null);
 
@@ -47,7 +47,7 @@ const JobCard = ({
 
   const handleClick = evt => {
     evt.stopPropagation();
-    deleteJob(jobId);
+    dispatch(deleteJob(jobId));
   };
 
   const onDragStart = evt => {
@@ -121,4 +121,4 @@ const JobItemContainer = styled.article`
   }
 `;
 
-export default connect(null, { deleteJob })(withRouter(JobCard));
+export default withRouter(JobCard);

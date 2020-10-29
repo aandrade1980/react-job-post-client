@@ -11,7 +11,7 @@ import { openModal, setSelectedJob } from '../redux/actions/jobActions';
 
 // Components
 import CustomButton from './CustomButton';
-import { components } from '../util/Contants';
+import { components } from '../util/Constant';
 
 // MUI
 import EditIcon from '@material-ui/icons/Edit';

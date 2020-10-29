@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 // MUI
-import { Button } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   ...theme.authenticatingButtons
@@ -12,27 +12,25 @@ const styles = theme => ({
 const AuthenticatingButtons = ({ netlifyIdentity, classes }) => {
   const handleAuthentication = action => netlifyIdentity.open(action);
   const buttons = [
-    { action: "login", text: "login" },
-    { action: "signup", text: "signup" }
+    { action: 'login', text: 'login' },
+    { action: 'signup', text: 'signup' }
   ];
 
   return (
     <Container>
       <Ul>
-        {buttons.map((button, index) => {
-          return (
-            <Li key={index}>
-              <Button
-                variant="contained"
-                className={classes.buttons}
-                onClick={() => handleAuthentication(`${button.action}`)}
-                size="large"
-              >
-                {button.text}
-              </Button>
-            </Li>
-          );
-        })}
+        {buttons.map((button, index) => (
+          <Li key={index}>
+            <Button
+              variant="contained"
+              className={classes.buttons}
+              onClick={() => handleAuthentication(`${button.action}`)}
+              size="large"
+            >
+              {button.text}
+            </Button>
+          </Li>
+        ))}
       </Ul>
     </Container>
   );

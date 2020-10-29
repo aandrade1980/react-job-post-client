@@ -1,4 +1,4 @@
-import { API_URL } from '../../util/Contants';
+import { API_URL } from '../../util/Constant';
 
 import { toastMessage } from './toastActions';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // MUI
@@ -11,23 +12,26 @@ import {
   FilterList
 } from '@material-ui/icons';
 
-// Redux
-import { connect } from 'react-redux';
+// Redux Actions
 import { openModal } from '../redux/actions/jobActions';
 
 // Components
 import CustomButton from './CustomButton';
 import LoginAvatar from './LoginAvatar';
 
-import { components } from '../util/Contants';
+import { components } from '../util/Constant';
 
 const styles = theme => ({
   ...theme.appBar
 });
 
-const Header = ({ openModal, classes, title, jobs }) => {
+const Header = ({ classes, title }) => {
+  const jobs = useSelector(state => state.job.jobs);
+  const dispatch = useDispatch();
   const handleClick = cmp =>
-    openModal({ show: true, edit: false, component: components[cmp] });
+    dispatch(
+      openModal({ show: true, edit: false, component: components[cmp] })
+    );
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -62,10 +66,4 @@ const Header = ({ openModal, classes, title, jobs }) => {
   );
 };
 
-const MapStateToProps = ({ job: { jobs } }) => ({
-  jobs
-});
-
-export default connect(MapStateToProps, { openModal })(
-  withStyles(styles)(Header)
-);
+export default withStyles(styles)(Header);
