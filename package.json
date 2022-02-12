@@ -46,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-react-job-post-functions.cloudfunctions.net/api"
+  "proxy": "https://us-central1-react-job-post-functions.cloudfunctions.net/api",
+  "engines": {
+    "node": ">=12.0.0"
+  }
 }
