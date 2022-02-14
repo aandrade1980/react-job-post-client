@@ -13,7 +13,7 @@ import { loginUser, logoutUser } from './redux/actions/userActions';
 import { getAllJobs } from './redux/actions/jobActions';
 
 // MUI
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 // Components
 import Header from './components/Header';
@@ -25,7 +25,7 @@ import AuthenticatingButtons from './components/AuthenticatingButtons';
 
 const Toast = React.lazy(() => import('./components/Toast'));
 
-const theme = createMuiTheme(themeFile);
+const theme = createTheme(themeFile);
 
 netlifyIdentity.init();
 
