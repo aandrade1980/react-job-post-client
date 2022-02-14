@@ -14,6 +14,7 @@ import { getAllJobs } from './redux/actions/jobActions';
 
 // MUI
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 
 // Components
 import Header from './components/Header';
@@ -54,7 +55,20 @@ const App = ({
 
   return (
     <>
-      <React.Suspense fallback={<div>Loading... </div>}>
+      <React.Suspense
+        fallback={
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh'
+            }}
+          >
+            <CircularProgress />
+          </div>
+        }
+      >
         <Toast />
       </React.Suspense>
       <Router>
