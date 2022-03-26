@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // MUI
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Badge } from '@material-ui/core';
+import { AppBar, Badge, Toolbar } from '@mui/material';
 import {
-  Home,
-  OpenInNew,
+  FilterList,
   FormatListBulleted,
-  FilterList
-} from '@material-ui/icons';
+  Home,
+  OpenInNew
+} from '@mui/icons-material';
+import { withStyles } from '@mui/styles';
 
 // Redux Actions
 import { openModal } from '../redux/actions/jobActions';
@@ -18,7 +18,6 @@ import { openModal } from '../redux/actions/jobActions';
 // Components
 import CustomButton from './CustomButton';
 import LoginAvatar from './LoginAvatar';
-
 import { components } from '../util/Constant';
 
 const styles = theme => ({

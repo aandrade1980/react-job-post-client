@@ -4,7 +4,7 @@ const initialState = {
   success: false
 };
 
-export default function (state = initialState, action) {
+export default function categoryReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_CATEGORIES':
       return {

@@ -14,8 +14,8 @@ import CustomButton from './CustomButton';
 import { components } from '../util/Constant';
 
 // MUI
-import EditIcon from '@material-ui/icons/Edit';
-
+// import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 // Hooks
 import { useJobById } from '../hooks/jobHooks';
 

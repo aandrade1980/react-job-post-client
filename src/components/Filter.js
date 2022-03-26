@@ -6,13 +6,8 @@ import { connect } from 'react-redux';
 import { setFilteredJobs, openModal } from '../redux/actions/jobActions';
 
 // MUI
-import {
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  IconButton
-} from '@material-ui/core';
-import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
+import { Checkbox, FormControlLabel, FormGroup, IconButton } from '@mui/material';
+import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 
 const Filter = ({ allCategories, setFilteredJobs, openModal }) => {
   const [selectedCategories, setSelectedCategories] = useState(

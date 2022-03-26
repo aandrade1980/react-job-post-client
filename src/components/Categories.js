@@ -9,13 +9,12 @@ import { postCategory, deleteCategory } from '../redux/actions/categoryActions';
 import { toastMessage } from '../redux/actions/toastActions';
 
 // MUI
-import { withStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import { Button, TextField } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import DeleteIcon from '@mui/icons-material/DeleteOutline'
 
 // Components
 import CustomButton from './CustomButton';
-import Spinner from './Spinner';
 
 const styles = theme => ({
   ...theme.spinner,
@@ -105,9 +104,6 @@ const Categories = ({ classes }) => {
             >
               Submit
             </Button>
-            {loading && (
-              <Spinner size={24} className={classes.buttonProgress} />
-            )}
           </div>
         </div>
         <div>
