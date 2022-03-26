@@ -6,20 +6,19 @@ import { connect } from 'react-redux';
 import { postJob, updateJob, openModal } from '../redux/actions/jobActions';
 
 // MUI
-import { withStyles } from '@material-ui/core/styles';
-import {
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  TextField
-} from '@material-ui/core';
-
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers';
+// import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
+// import {
+//   FormGroup,
+//   FormControlLabel,
+//   Checkbox,
+//   Button,
+//   TextField
+// } from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 // Components
 import Spinner from './Spinner';
@@ -32,12 +31,10 @@ class NewJobForm extends Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
-    this.removeClickOutsideEventListener = this.removeClickOutsideEventListener.bind(
-      this
-    );
-    this.addClickOutsideEventListener = this.addClickOutsideEventListener.bind(
-      this
-    );
+    this.removeClickOutsideEventListener =
+      this.removeClickOutsideEventListener.bind(this);
+    this.addClickOutsideEventListener =
+      this.addClickOutsideEventListener.bind(this);
   }
 
   state = {
@@ -144,7 +141,15 @@ class NewJobForm extends Component {
               label="Company"
             />
           </div>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Basic example"
+              value={this.state.postedDate}
+              onChange={this.handleDateChange}
+              renderInput={params => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               value={this.state.postedDate}
               onChange={this.handleDateChange}
@@ -153,7 +158,7 @@ class NewJobForm extends Component {
               onOpen={this.removeClickOutsideEventListener}
               onClose={this.addClickOutsideEventListener}
             />
-          </MuiPickersUtilsProvider>
+          </MuiPickersUtilsProvider> */}
           <div>
             <TextField
               type="text"

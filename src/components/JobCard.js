@@ -14,7 +14,8 @@ import { deleteJob } from '../redux/actions/jobActions';
 import CustomButton from './CustomButton';
 
 // MUI
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const JobCard = ({
   job: { jobId, title, image, createdAt, postedDate },

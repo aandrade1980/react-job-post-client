@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../redux/actions/userActions';
 
 // Material UI
-import Tooltip from '@material-ui/core/Tooltip';
+import { Tooltip } from '@mui/material';
 
 const LoginAvatar = ({ user, logoutUser }) => {
   const handleClick = () => logoutUser();

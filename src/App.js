@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import themeFile from './util/theme';
-
 // Netlify
 import netlifyIdentity from 'netlify-identity-widget';
 
@@ -13,20 +11,19 @@ import { loginUser, logoutUser } from './redux/actions/userActions';
 import { getAllJobs } from './redux/actions/jobActions';
 
 // MUI
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
+import { ThemeProvider } from '@mui/styles';
+import theme from './util/theme';
 
 // Components
-import Header from './components/Header';
-import JobsContainer from './components/Jobs';
-import JobItem from './components/JobItem';
-import ModalContainer from './components/Modal';
-import Categories from './components/Categories';
 import AuthenticatingButtons from './components/AuthenticatingButtons';
+import Categories from './components/Categories';
+import Header from './components/Header';
+import JobItem from './components/JobItem';
+import JobsContainer from './components/Jobs';
+import ModalContainer from './components/Modal';
 
 const Toast = React.lazy(() => import('./components/Toast'));
-
-const theme = createTheme(themeFile);
 
 netlifyIdentity.init();
 
@@ -72,7 +69,7 @@ const App = ({
         <Toast />
       </React.Suspense>
       <Router>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           {user ? (
             <div className="App">
               <Header title="Jobs" />
@@ -88,7 +85,7 @@ const App = ({
           ) : (
             <AuthenticatingButtons netlifyIdentity={netlifyIdentity} />
           )}
-        </MuiThemeProvider>
+        </ThemeProvider>
       </Router>
     </>
   );

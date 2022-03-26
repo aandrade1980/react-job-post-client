@@ -1,34 +1,35 @@
-import { blue, green, teal } from "@material-ui/core/colors";
+import { createTheme } from '@mui/material';
+import { blue, green, teal } from '@mui/material/colors';
 
-export default {
+const themeFile = {
   palette: {
     primary: blue
   },
   appBar: {
     a: {
-      color: "whitesmoke",
-      textDecoration: "none"
+      color: 'whitesmoke',
+      textDecoration: 'none'
     },
     h1: {
       marginRight: 45,
       marginLeft: 45
     },
     svg_white: {
-      color: "whitesmoke"
+      color: 'whitesmoke'
     }
   },
   spinner: {
     successButton: {
       backgroundColor: green[500],
-      "&:hover": {
+      '&:hover': {
         backgroundColor: green[700]
       }
     },
     buttonProgress: {
       color: green[500],
-      position: "absolute",
-      top: "50%",
-      left: "50%",
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
       marginTop: -12,
       marginLeft: -12
     }
@@ -36,10 +37,14 @@ export default {
   authenticatingButtons: {
     buttons: {
       backgroundColor: teal[400],
-      color: "white",
-      "&:hover": {
+      color: 'white',
+      '&:hover': {
         backgroundColor: teal[700]
       }
     }
   }
 };
+
+const theme = createTheme(themeFile);
+
+export default theme;

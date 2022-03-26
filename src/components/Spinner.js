@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { CircularProgress } from '@mui/material';
 
 const Spinner = ({ color = "secondary", size = 80, className }) => (
   <CircularProgress color={color} size={size} className={className} />
